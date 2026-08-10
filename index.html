@@ -353,14 +353,14 @@
         <span class="close-modal" onclick="fecharModal()">&times;</span>
         <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
         <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: -6px; margin-bottom: 15px;">
-          Para realizar sua matrícula, compareça à nossa secretaria portando os seguintes documentos (originais e cópias):
+          Para realizar sua matrícula, compareça à nossa secretaria portando os seguintes documentos (originais e <strong>cópias legíveis</strong>strong>):
         </p>
         <ul class="modal-list">
-          <li><strong>Documento de Identidade:</strong> RG ou Certidão de Nascimento;</li>
+          <li><strong>Documento de Identidade:</strong> CIN ou documento com foto;</li>
           <li><strong>Comprovante de Residência:</strong> Atualizado (últimos 3 meses);</li>
-          <li><strong>Saúde:</strong> Carteirinha do SUS;</li>
-          <li><strong>Foto:</strong> 1 Foto 3x4 recente;</li>
-          <li><strong>Para menores de idade:</strong> Declaração de Matrícula Escolar atualizada e presença do Responsável Legal.</li>
+          <li><strong>Foto:</strong> Tiramos foto;</li>
+          <li><strong>Para menores de idade:</strong> CIN ou Certidão de Nascimento</li>
+          <li><strong>Parentes (tios, tias, avôs, avós):</strong> CIN e carta de próprio punho redigida pelo(a) responsável Legal pelo(a) menor</li>
         </ul>
         <div style="text-align: right;">
           <button class="btn-buscar" onclick="fecharModal()">Entendi! 👍</button>
@@ -372,7 +372,7 @@
       // ====================================================
       // 🚨 COLOQUE O LINK DO SEU WEB APP AQUI (COM /exec NO FINAL)
       // ====================================================
-      const LINK_DO_GOOGLE = "COLE_AQUI_SEU_LINK_DO_EXEC"; 
+      const LINK_DO_GOOGLE = "https://script.google.com/macros/s/AKfycbxJG6E8mTA3CPA-_ZLtSILVC17QOejNfspG6dV0qJ-WB-JS5HkiN6d20vpec7-xfus8/exec"; 
       const API_URL = LINK_DO_GOOGLE + "?api=sim";
 
       let diasSelecionados = [];
