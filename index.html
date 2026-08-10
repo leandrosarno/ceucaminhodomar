@@ -7,10 +7,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
       /* =========================================
-         VARIÁVEIS DE CORES (MÁGICA DO CLARO/ESCURO)
+         VARIÁVEIS DE CORES (MODO CLARO E ESCURO)
          ========================================= */
       :root {
-        --bg-color: #f0f7f4; /* Fundo levemente esverdeado/azulado */
+        --bg-color: #f0f7f4;
         --card-bg: #ffffff;
         --text-main: #2d3748;
         --text-muted: #718096;
@@ -19,10 +19,9 @@
         --input-bg: #ffffff;
         --table-header: #ebf8ff;
         --table-hover: #f7fafc;
-        --shadow: 0 10px 25px rgba(0,0,0,0.05);
+        --shadow: 0 6px 18px rgba(0,0,0,0.06);
       }
 
-      /* TEMA ESCURO (Dark Mode) */
       body.dark-mode {
         --bg-color: #1a202c;
         --card-bg: #2d3748;
@@ -33,130 +32,202 @@
         --input-bg: #1a202c;
         --table-header: #2d3748;
         --table-hover: #4a5568;
-        --shadow: 0 10px 25px rgba(0,0,0,0.3);
+        --shadow: 0 8px 20px rgba(0,0,0,0.3);
       }
 
       /* =========================================
-         ESTILOS GERAIS
+         ESTILOS GERAIS E LAYOUT ENXUTO
          ========================================= */
       body { 
         font-family: 'Nunito', sans-serif; 
         background-color: var(--bg-color); 
         color: var(--text-main);
         margin: 0; 
-        padding: 20px; 
+        padding: 12px; 
         display: flex; 
         justify-content: center; 
-        transition: background-color 0.4s, color 0.4s;
+        transition: background-color 0.3s, color 0.3s;
       }
       
       .container { 
         background-color: var(--card-bg); 
         width: 100%; 
-        max-width: 1200px; 
-        border-radius: 20px; /* Bordas mais arredondadas (pedagógico) */
+        max-width: 1100px; 
+        border-radius: 16px; 
         box-shadow: var(--shadow); 
-        padding: 40px; 
+        padding: 20px 24px; 
         box-sizing: border-box; 
         position: relative;
-        transition: background-color 0.4s;
+        transition: background-color 0.3s;
       }
 
       /* =========================================
-         BOTÕES DO TOPO (TEMA E DOCUMENTOS)
+         BARRA SUPERIOR (CABEÇALHO + AÇÕES)
          ========================================= */
+      .top-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 12px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .header-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo-ceu { 
+        max-height: 58px; 
+        width: auto;
+        border-radius: 8px;
+        object-fit: contain;
+      }
+
+      .header-titles h2 { 
+        color: var(--header-color); 
+        margin: 0; 
+        font-size: 20px; 
+        font-weight: 800; 
+        line-height: 1.1;
+      }
+
+      .header-titles .address { 
+        color: var(--text-muted); 
+        margin: 2px 0 0 0; 
+        font-size: 12px; 
+        font-weight: 600; 
+      }
+
+      .header-titles .page-tag {
+        color: #ed8936;
+        font-size: 13px;
+        font-weight: 800;
+        margin-top: 2px;
+        display: block;
+      }
+
       .top-actions {
         display: flex;
-        justify-content: flex-end;
-        gap: 15px;
-        margin-bottom: 20px;
+        align-items: center;
+        gap: 8px;
       }
 
       .btn-theme, .btn-docs {
         background-color: var(--bg-color);
         color: var(--header-color);
-        border: 2px solid var(--border-color);
-        padding: 10px 15px;
-        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        padding: 8px 12px;
+        border-radius: 10px;
         font-weight: 800;
+        font-size: 13px;
         cursor: pointer;
         font-family: 'Nunito', sans-serif;
-        transition: 0.3s;
+        transition: 0.2s;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
       }
 
       .btn-theme:hover, .btn-docs:hover {
         background-color: var(--header-color);
         color: #ffffff;
         border-color: var(--header-color);
-        transform: translateY(-2px);
       }
 
       /* =========================================
-         CABEÇALHO E LOGO
+         FILTROS (COMBOS)
          ========================================= */
-      .header { text-align: center; margin-bottom: 30px; }
-      .logo-ceu { 
-        max-height: 90px; 
-        margin-bottom: 15px;
-        border-radius: 10px;
+      .filters-row { 
+        display: flex; 
+        gap: 10px; 
+        margin-bottom: 12px; 
+        flex-wrap: wrap; 
       }
-      h2 { color: var(--header-color); margin: 0 0 10px 0; font-size: 28px; font-weight: 800; }
-      .subtitle { color: var(--text-muted); margin: 0; font-size: 16px; font-weight: 600; }
       
-      /* =========================================
-         FILTROS E BUSCA (Design Colorido)
-         ========================================= */
-      .filters-row, .search-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
-      
-      select, input {
+      select {
         flex: 1; 
-        min-width: 200px; 
-        padding: 14px 18px; 
-        border: 2px solid var(--border-color); 
-        border-radius: 12px; 
-        font-size: 15px; 
+        min-width: 140px; 
+        padding: 8px 12px; 
+        border: 1.5px solid var(--border-color); 
+        border-radius: 10px; 
+        font-size: 13px; 
         font-family: 'Nunito', sans-serif;
-        font-weight: 600;
+        font-weight: 700;
         outline: none; 
         background-color: var(--input-bg);
         color: var(--text-main);
-        transition: 0.3s;
+        transition: 0.2s;
       }
-      select:focus, input:focus { border-color: #4299e1; box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.2); }
-
-      .btn-buscar { 
-        padding: 14px 30px; 
-        background: linear-gradient(135deg, #4299e1, #3182ce);
-        color: white; 
-        border: none; 
-        border-radius: 12px; 
-        font-size: 16px; 
-        font-weight: 800; 
-        cursor: pointer; 
-        transition: 0.3s; 
-        box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
-      }
-      .btn-buscar:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(66, 153, 225, 0.4); }
+      select:focus { border-color: #4299e1; }
 
       /* =========================================
-         BOTÕES DOS DIAS DA SEMANA
+         BARRA DE BUSCA COMPACTA + DIAS INTEGRADOS
          ========================================= */
-      .days-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+      .search-days-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--input-bg);
+        border: 1.5px solid var(--border-color);
+        padding: 6px 10px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+      }
+
+      .search-days-box input {
+        flex: 2;
+        min-width: 160px;
+        padding: 6px 8px;
+        border: none;
+        font-size: 13px;
+        font-family: 'Nunito', sans-serif;
+        font-weight: 600;
+        outline: none;
+        background: transparent;
+        color: var(--text-main);
+      }
+
+      .days-inline {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
       .day-btn { 
-        padding: 10px 20px; 
-        border: 2px solid var(--border-color); 
-        border-radius: 20px; 
-        background: var(--input-bg); 
+        padding: 5px 9px; 
+        border: 1px solid var(--border-color); 
+        border-radius: 14px; 
+        background: var(--card-bg); 
         color: var(--text-muted); 
         font-weight: 800; 
+        font-size: 11px;
         cursor: pointer; 
-        transition: 0.3s; 
+        transition: 0.2s; 
       }
       .day-btn:hover { border-color: #ecc94b; color: #d69e2e; }
       .day-btn.active { background-color: #ecc94b; color: #744210; border-color: #ecc94b; }
+
+      .btn-buscar { 
+        padding: 8px 18px; 
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+        color: white; 
+        border: none; 
+        border-radius: 10px; 
+        font-size: 13px; 
+        font-weight: 800; 
+        cursor: pointer; 
+        transition: 0.2s; 
+        white-space: nowrap;
+      }
+      .btn-buscar:hover { opacity: 0.9; }
 
       /* =========================================
          MODAL DE DOCUMENTOS
@@ -168,73 +239,75 @@
         left: 0; top: 0; 
         width: 100%; height: 100%; 
         background-color: rgba(0,0,0,0.5); 
-        backdrop-filter: blur(5px);
+        backdrop-filter: blur(4px);
         justify-content: center; align-items: center;
       }
       .modal-content {
         background-color: var(--card-bg);
-        padding: 30px;
-        border-radius: 20px;
+        padding: 24px;
+        border-radius: 16px;
         width: 90%;
-        max-width: 500px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        max-width: 460px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         position: relative;
-        text-align: left;
       }
       .close-modal {
         position: absolute;
-        top: 15px; right: 20px;
-        font-size: 24px;
+        top: 12px; right: 16px;
+        font-size: 22px;
         font-weight: bold;
         color: var(--text-muted);
         cursor: pointer;
       }
       .close-modal:hover { color: #e53e3e; }
-      .modal-title { color: #805ad5; font-size: 22px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
-      .modal-list { font-size: 16px; line-height: 1.8; color: var(--text-main); margin-bottom: 25px; padding-left: 20px;}
-      .modal-list li { margin-bottom: 8px; }
+      .modal-title { color: #805ad5; font-size: 19px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
+      .modal-list { font-size: 14px; line-height: 1.7; color: var(--text-main); margin-bottom: 20px; padding-left: 18px;}
 
       /* =========================================
          TABELA E RESULTADOS
          ========================================= */
-      .loading, .no-results { text-align: center; font-weight: 800; font-size: 18px; margin: 30px 0; padding: 30px; border-radius: 12px; }
+      .loading, .no-results { text-align: center; font-weight: 800; font-size: 15px; margin: 20px 0; padding: 20px; border-radius: 10px; }
       .loading { color: #2b6cb0; background-color: #ebf8ff; }
       .no-results { color: #c53030; background-color: #fff5f5; }
       
-      .table-container { overflow-x: auto; border-radius: 12px; }
-      table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15px; }
-      th, td { padding: 15px 12px; text-align: center; border-bottom: 2px solid var(--border-color); vertical-align: middle; }
-      th { background-color: var(--table-header); color: var(--header-color); font-weight: 800; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px;}
+      .table-container { overflow-x: auto; border-radius: 10px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 13px; }
+      th, td { padding: 10px 10px; text-align: center; border-bottom: 1.5px solid var(--border-color); vertical-align: middle; }
+      th { background-color: var(--table-header); color: var(--header-color); font-weight: 800; white-space: nowrap; text-transform: uppercase; font-size: 12px;}
       tr:hover td { background-color: var(--table-hover); }
       
-      /* Alinhamento à esquerda das primeiras colunas */
       th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), 
-      th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), 
-      th:nth-child(5), td:nth-child(5) { text-align: left; }
+      th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4) { text-align: left; }
       
-      /* Cores divertidas e marcantes para as Badges (Pedagógico) */
-      .badge { padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 800; display: inline-block; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
-      .badge-green { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; } 
-      .badge-red { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; } 
-      .badge-purple { background-color: #e9d8fd; color: #44337a; border: 1px solid #d6bcfa; } 
-      .badge-dias { background-color: #bee3f8; color: #2a4365; padding: 6px 10px; border-radius: 8px; font-weight: 800; font-size: 13px; margin-right: 5px; display: inline-block; white-space: nowrap; }
-      .badge-hora { color: var(--text-muted); font-weight: 800; font-size: 14px; white-space: nowrap; }
+      .badge-dias { background-color: #bee3f8; color: #2a4365; padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 11px; margin-right: 4px; display: inline-block; white-space: nowrap; }
+      .badge-hora { color: var(--text-muted); font-weight: 700; font-size: 12px; white-space: nowrap; }
+
+      @media (max-width: 600px) {
+        .top-header { flex-direction: column; align-items: flex-start; }
+        .top-actions { width: 100%; justify-content: space-between; margin-top: 8px; }
+        .search-days-box { flex-direction: column; align-items: stretch; }
+        .days-inline { justify-content: space-between; }
+        .btn-buscar { width: 100%; text-align: center; }
+      }
     </style>
   </head>
   <body>
     <div class="container">
       
-      <div class="top-actions">
-        <button class="btn-docs" onclick="abrirModal()"><i class="fas fa-file-signature"></i> O que preciso para matricular?</button>
-        <button class="btn-theme" onclick="alternarTema()"><i id="icone-tema" class="fas fa-moon"></i></button>
-      </div>
+      <div class="top-header">
+        <div class="header-brand">
+          <img src="https://drive.google.com/thumbnail?id=1_QvlG1xHgKY_ukxAF9C4V-VhHbG9d-Q1&sz=w800" alt="Logo CEU" class="logo-ceu">
+          <div class="header-titles">
+            <h2>CEU CAMINHO DO MAR</h2>
+            <p class="address">Av. Eng. Armando de Arruda Pereira, 5241 - Vila do Encontro</p>
+            <span class="page-tag">🎈 Consulta Pública de Atividades</span>
+          </div>
+        </div>
 
-      <div class="header">
-        <img src="https://drive.google.com/thumbnail?id=1_QvlG1xHgKY_ukxAF9C4V-VhHbG9d-Q1&sz=w800" alt="Logo CEU" class="logo-ceu">
-        <h2>CEU CAMINHO DO MAR</h2>
-        <h4 style="color: var(--text-muted); margin: 0 0 15px 0;">Av. Eng. Armando de Arruda Pereira, 5241 - Vila do Encontro</h4>
-        <h3 style="color: #ed8936; margin: 0 0 5px 0; font-weight: 800;">🎈 Consulta Pública de Atividades 🎨</h3>
-        <p class="subtitle">Verifique a disponibilidade de vagas de Segunda à Sexta, das 07h30 às 19h30</p>
+        <div class="top-actions">
+          <button class="btn-docs" onclick="abrirModal()"><i class="fas fa-file-signature"></i> Documentos</button>
+          <button class="btn-theme" onclick="alternarTema()"><i id="icone-tema" class="fas fa-moon"></i></button>
+        </div>
       </div>
 
       <div class="filters-row">
@@ -255,19 +328,20 @@
         </select>
       </div>
 
-      <div class="search-row">
-        <input type="text" id="termo" placeholder="🔍 Ou digite o nome de uma atividade livremente..." onkeypress="verificarEnter(event)">
-        <button class="btn-buscar" onclick="pesquisar()"><i class="fas fa-search"></i> Buscar Atividades</button>
-      </div>
+      <div class="search-days-box">
+        <input type="text" id="termo" placeholder="🔍 Digite a atividade ou horário..." onkeypress="verificarEnter(event)">
+        
+        <div class="days-inline">
+          <button class="day-btn" onclick="toggleDia('DOM', this)">DOM</button>
+          <button class="day-btn" onclick="toggleDia('SEG', this)">SEG</button>
+          <button class="day-btn" onclick="toggleDia('TER', this)">TER</button>
+          <button class="day-btn" onclick="toggleDia('QUA', this)">QUA</button>
+          <button class="day-btn" onclick="toggleDia('QUI', this)">QUI</button>
+          <button class="day-btn" onclick="toggleDia('SEX', this)">SEX</button>
+          <button class="day-btn" onclick="toggleDia('SAB', this)">SAB</button>
+        </div>
 
-      <div class="days-container">
-        <button class="day-btn" onclick="toggleDia('DOM', this)">DOM</button>
-        <button class="day-btn" onclick="toggleDia('SEG', this)">SEG</button>
-        <button class="day-btn" onclick="toggleDia('TER', this)">TER</button>
-        <button class="day-btn" onclick="toggleDia('QUA', this)">QUA</button>
-        <button class="day-btn" onclick="toggleDia('QUI', this)">QUI</button>
-        <button class="day-btn" onclick="toggleDia('SEX', this)">SEX</button>
-        <button class="day-btn" onclick="toggleDia('SAB', this)">SAB</button>
+        <button class="btn-buscar" onclick="pesquisar()"><i class="fas fa-search"></i> Buscar</button>
       </div>
 
       <div id="resultado" class="table-container">
@@ -278,16 +352,15 @@
       <div class="modal-content">
         <span class="close-modal" onclick="fecharModal()">&times;</span>
         <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
-        <p style="color: var(--text-muted); font-weight: 600; margin-top: -10px; margin-bottom: 20px;">
-          Para realizar sua matrícula, compareça à nossa secretaria portando os seguintes documentos (originais e cópias legíveis):
+        <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: -6px; margin-bottom: 15px;">
+          Para realizar sua matrícula, compareça à nossa secretaria portando os seguintes documentos (originais e cópias):
         </p>
         <ul class="modal-list">
-          <li><strong>Documento de Identidade:</strong> CIN do(a) Responsável Legal;</li>
+          <li><strong>Documento de Identidade:</strong> RG ou Certidão de Nascimento;</li>
           <li><strong>Comprovante de Residência:</strong> Atualizado (últimos 3 meses);</li>
-          <!-- <li><strong>Saúde:</strong> Carteirinha do SUS;</li> -->
-          <li><strong>Foto:</strong> tiramos foto;</li>
-          <li><strong>Para menores de idade:</strong> CIN ou Certidão de Nascimento;</li>
-          <li><strong>Parentes (tios, tias, avôs, avós):</strong> CIN  e carta de próprio punho do(a) responsável Legal autorizando a realização de matrícula </li>
+          <li><strong>Saúde:</strong> Carteirinha do SUS;</li>
+          <li><strong>Foto:</strong> 1 Foto 3x4 recente;</li>
+          <li><strong>Para menores de idade:</strong> Declaração de Matrícula Escolar atualizada e presença do Responsável Legal.</li>
         </ul>
         <div style="text-align: right;">
           <button class="btn-buscar" onclick="fecharModal()">Entendi! 👍</button>
@@ -295,16 +368,15 @@
       </div>
     </div>
 
-<script>
+    <script>
       // ====================================================
-      // 🚨 COLOQUE O LINK DA SUA PLANILHA AQUI DENTRO (COM /exec NO FINAL)
+      // 🚨 COLOQUE O LINK DO SEU WEB APP AQUI (COM /exec NO FINAL)
       // ====================================================
-      const LINK_DO_GOOGLE = "https://script.google.com/macros/s/AKfycbxJG6E8mTA3CPA-_ZLtSILVC17QOejNfspG6dV0qJ-WB-JS5HkiN6d20vpec7-xfus8/exec"; 
+      const LINK_DO_GOOGLE = "COLE_AQUI_SEU_LINK_DO_EXEC"; 
       const API_URL = LINK_DO_GOOGLE + "?api=sim";
 
       let diasSelecionados = [];
 
-      // Funções de visual (Tema e Modal)
       function alternarTema() {
         document.body.classList.toggle('dark-mode');
         const icone = document.getElementById('icone-tema');
@@ -330,10 +402,9 @@
       }
 
       // ====================================================
-      // 🌟 COMUNICAÇÃO COM O SERVIDOR (NOVO MÉTODO PARA GITHUB)
+      // COMUNICAÇÃO COM O GOOGLE SHEETS VIA API / FETCH
       // ====================================================
 
-      // Ao abrir, busca os combos usando a API
       document.addEventListener("DOMContentLoaded", function() {
         fetch(API_URL + "&acao=buscarCombos")
           .then(resposta => resposta.json())
@@ -366,13 +437,12 @@
         var espSelecionado = document.getElementById('comboEspaco').value;
         
         if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
-           document.getElementById('resultado').innerHTML = "<div class='no-results'>✌️ Por favor, escolha uma opção nos filtros ou digite algo para começarmos!</div>";
+           document.getElementById('resultado').innerHTML = "<div class='no-results'>✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!</div>";
            return;
         }
 
-        document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades mágicas para você, aguarde um instante...</div>";
+        document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades, aguarde...</div>";
         
-        // Empacota os filtros para enviar pela internet
         const params = new URLSearchParams({
           acao: 'buscarDados',
           termo: termo,
@@ -383,23 +453,21 @@
           esp: espSelecionado
         });
 
-        // Manda o pacote para o Google Sheets e espera a resposta
         fetch(API_URL + "&" + params.toString())
           .then(resposta => resposta.json())
           .then(dados => mostrarResultados(dados))
           .catch(erro => {
-            document.getElementById('resultado').innerHTML = "<div class='no-results'>Erro de conexão com o banco de dados. Tente novamente.</div>";
+            document.getElementById('resultado').innerHTML = "<div class='no-results'>Erro ao carregar os dados. Tente novamente.</div>";
             console.log(erro);
           });
       }
 
-function mostrarResultados(dados) {
+      function mostrarResultados(dados) {
         if (dados.length == 0) {
-          document.getElementById('resultado').innerHTML = "<div class='no-results'>Puxa! Nenhuma turma encontrada com estes filtros. 😔 Que tal tentar outros dias ou atividades?</div>";
+          document.getElementById('resultado').innerHTML = "<div class='no-results'>Nenhuma turma encontrada com estes filtros. 😔 Tente outras opções!</div>";
           return;
         }
 
-        // ❌ Removi o <th>Status da Turma</th> daqui:
         var tabela = "<table><tr><th>Turma</th><th>Atividade</th><th>Local / Espaço</th><th>Professor(a)</th><th>Dias e Horários</th></tr>";
         
         for (var i = 0; i < dados.length; i++) {
@@ -408,10 +476,9 @@ function mostrarResultados(dados) {
           var diasFormatados = turma.dias ? "<span class='badge-dias'>" + turma.dias + "</span>" : "";
           var horaFormatada = turma.horario ? "<span class='badge-hora'><i class='far fa-clock'></i> " + turma.horario + "</span>" : "";
 
-          // ❌ Removi a lógica das vagas e o <td> do statusVisual daqui:
           tabela += "<tr>" +
-            "<td><strong style='color:#3182ce; font-size: 16px;'>" + (turma.turma || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.nucleo || "") + "</small></td>" + 
-            "<td><strong style='font-size: 16px;'>" + (turma.modalidade || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.sufixo || "") + "</small></td>" + 
+            "<td><strong style='color:#3182ce; font-size: 15px;'>" + (turma.turma || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.nucleo || "") + "</small></td>" + 
+            "<td><strong style='font-size: 15px;'>" + (turma.modalidade || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.sufixo || "") + "</small></td>" + 
             "<td>" + (turma.espaco || "-") + "</td>" + 
             "<td>" + (turma.professor || "-") + "</td>" + 
             "<td>" + diasFormatados + "<br>" + horaFormatada + "</td>" + 
