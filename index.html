@@ -295,12 +295,16 @@
       </div>
     </div>
 
-    <script>
+<script>
+      // ====================================================
+      // 🚨 COLOQUE O LINK DA SUA PLANILHA AQUI DENTRO (COM /exec NO FINAL)
+      // ====================================================
+      const LINK_DO_GOOGLE = "COLE_AQUI_SEU_LINK_DO_EXEC"; 
+      const API_URL = LINK_DO_GOOGLE + "?api=sim";
+
       let diasSelecionados = [];
 
-      // =====================================
-      // FUNÇÕES DO MODO ESCURO E MODAL
-      // =====================================
+      // Funções de visual (Tema e Modal)
       function alternarTema() {
         document.body.classList.toggle('dark-mode');
         const icone = document.getElementById('icone-tema');
@@ -311,52 +315,9 @@
         }
       }
 
-      function abrirModal() {
-        document.getElementById('modalDocumentos').style.display = 'flex';
-      }
-      function fecharModal() {
-        document.getElementById('modalDocumentos').style.display = 'none';
-      }
-
-      // 🌟 AO ABRIR O APLICATIVO, BUSCA AS LISTAS
-      document.addEventListener("DOMContentLoaded", function() {
-        google.script.run.withSuccessHandler(preencherCombos).buscarOpcoesCombos();
-      });
-
-      function preencherCombos(opcoes) {
-        const comboMod = document.getElementById('comboModalidade');
-        opcoes.modalidades.forEach(function(mod) {
-          const option = document.createElement("option");
-          option.value = mod; option.text = mod;
-          comboMod.appendChild(option);
-        });
-
-        const comboNuc = document.getElementById('comboNucleo');
-        opcoes.nucleos.forEach(function(nuc) {
-          const option = document.createElement("option");
-          option.value = nuc; option.text = nuc;
-          comboNuc.appendChild(option);
-        });
-
-        const comboProf = document.getElementById('comboProfessor');
-        opcoes.professores.forEach(function(prof) {
-          const option = document.createElement("option");
-          option.value = prof.nome;
-          option.text = prof.tipo !== "" ? prof.nome + " (" + prof.tipo + ")" : prof.nome;
-          comboProf.appendChild(option);
-        });
-
-        const comboEsp = document.getElementById('comboEspaco');
-        opcoes.espacos.forEach(function(esp) {
-          const option = document.createElement("option");
-          option.value = esp; option.text = esp;
-          comboEsp.appendChild(option);
-        });
-      }
-
-      function verificarEnter(event) {
-        if (event.key === 'Enter') pesquisar();
-      }
+      function abrirModal() { document.getElementById('modalDocumentos').style.display = 'flex'; }
+      function fecharModal() { document.getElementById('modalDocumentos').style.display = 'none'; }
+      function verificarEnter(event) { if (event.key === 'Enter') pesquisar(); }
 
       function toggleDia(dia, btn) {
         btn.classList.toggle('active');
@@ -368,23 +329,68 @@
         pesquisar();
       }
 
+      // ====================================================
+      // 🌟 COMUNICAÇÃO COM O SERVIDOR (NOVO MÉTODO PARA GITHUB)
+      // ====================================================
+
+      // Ao abrir, busca os combos usando a API
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch(API_URL + "&acao=buscarCombos")
+          .then(resposta => resposta.json())
+          .then(dados => preencherCombos(dados))
+          .catch(erro => console.log("Erro ao carregar os combos: ", erro));
+      });
+
+      function preencherCombos(opcoes) {
+        const comboMod = document.getElementById('comboModalidade');
+        opcoes.modalidades.forEach(mod => comboMod.appendChild(new Option(mod, mod)));
+
+        const comboNuc = document.getElementById('comboNucleo');
+        opcoes.nucleos.forEach(nuc => comboNuc.appendChild(new Option(nuc, nuc)));
+
+        const comboProf = document.getElementById('comboProfessor');
+        opcoes.professores.forEach(prof => {
+          let texto = prof.tipo !== "" ? prof.nome + " (" + prof.tipo + ")" : prof.nome;
+          comboProf.appendChild(new Option(texto, prof.nome));
+        });
+
+        const comboEsp = document.getElementById('comboEspaco');
+        opcoes.espacos.forEach(esp => comboEsp.appendChild(new Option(esp, esp)));
+      }
+
       function pesquisar() {
-        var termo          = document.getElementById('termo').value;
+        var termo = document.getElementById('termo').value;
         var modSelecionada = document.getElementById('comboModalidade').value;
         var nucSelecionado = document.getElementById('comboNucleo').value;
-        var profSelecionado= document.getElementById('comboProfessor').value;
+        var profSelecionado = document.getElementById('comboProfessor').value;
         var espSelecionado = document.getElementById('comboEspaco').value;
         
         if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
            document.getElementById('resultado').innerHTML = "<div class='no-results'>✌️ Por favor, escolha uma opção nos filtros ou digite algo para começarmos!</div>";
-           // document.getElementById('btn-imprimir').style.display = 'none'; // Botão imprimir escondido
            return;
         }
 
         document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades mágicas para você, aguarde um instante...</div>";
-        // document.getElementById('btn-imprimir').style.display = 'none'; // Botão imprimir escondido
         
-        google.script.run.withSuccessHandler(mostrarResultados).buscarDados(termo, diasSelecionados, profSelecionado, modSelecionada, nucSelecionado, espSelecionado);
+        // Empacota os filtros para enviar pela internet
+        const params = new URLSearchParams({
+          acao: 'buscarDados',
+          termo: termo,
+          dias: JSON.stringify(diasSelecionados),
+          prof: profSelecionado,
+          mod: modSelecionada,
+          nuc: nucSelecionado,
+          esp: espSelecionado
+        });
+
+        // Manda o pacote para o Google Sheets e espera a resposta
+        fetch(API_URL + "&" + params.toString())
+          .then(resposta => resposta.json())
+          .then(dados => mostrarResultados(dados))
+          .catch(erro => {
+            document.getElementById('resultado').innerHTML = "<div class='no-results'>Erro de conexão com o banco de dados. Tente novamente.</div>";
+            console.log(erro);
+          });
       }
 
       function mostrarResultados(dados) {
@@ -393,22 +399,10 @@
           return;
         }
 
-        // document.getElementById('btn-imprimir').style.display = 'block'; // Botão imprimir escondido
-
-        var tabela = "<table>" +
-                     "<tr>" +
-                       "<th>Turma</th>" +
-                       "<th>Atividade</th>" +
-                       "<th>Local / Espaço</th>" +
-                       "<th>Professor(a)</th>" +
-                       "<th>Dias e Horários</th>" + 
-                       "<th>Status da Turma</th>" + 
-                     "</tr>";
+        var tabela = "<table><tr><th>Turma</th><th>Atividade</th><th>Local / Espaço</th><th>Professor(a)</th><th>Dias e Horários</th><th>Status da Turma</th></tr>";
         
         for (var i = 0; i < dados.length; i++) {
           var turma = dados[i]; 
-          
-          // Lógica de Status: Tem Vaga ou Lista de Espera?
           var statusVisual = turma.vagasDisponiveis > 0 ? 
                              "<span class='badge badge-green'>VAGAS ABERTAS ✅</span>" : 
                              "<span class='badge badge-red'>LISTA DE ESPERA ⏳</span>";
