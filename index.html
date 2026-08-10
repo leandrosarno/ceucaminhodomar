@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <base target="_top">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+      /* =========================================
+         VARIÁVEIS DE CORES (MÁGICA DO CLARO/ESCURO)
+         ========================================= */
+      :root {
+        --bg-color: #f0f7f4; /* Fundo levemente esverdeado/azulado */
+        --card-bg: #ffffff;
+        --text-main: #2d3748;
+        --text-muted: #718096;
+        --border-color: #e2e8f0;
+        --header-color: #2b6cb0;
+        --input-bg: #ffffff;
+        --table-header: #ebf8ff;
+        --table-hover: #f7fafc;
+        --shadow: 0 10px 25px rgba(0,0,0,0.05);
+      }
+
+      /* TEMA ESCURO (Dark Mode) */
+      body.dark-mode {
+        --bg-color: #1a202c;
+        --card-bg: #2d3748;
+        --text-main: #e2e8f0;
+        --text-muted: #a0aec0;
+        --border-color: #4a5568;
+        --header-color: #63b3ed;
+        --input-bg: #1a202c;
+        --table-header: #2d3748;
+        --table-hover: #4a5568;
+        --shadow: 0 10px 25px rgba(0,0,0,0.3);
+      }
+
+      /* =========================================
+         ESTILOS GERAIS
+         ========================================= */
+      body { 
+        font-family: 'Nunito', sans-serif; 
+        background-color: var(--bg-color); 
+        color: var(--text-main);
+        margin: 0; 
+        padding: 20px; 
+        display: flex; 
+        justify-content: center; 
+        transition: background-color 0.4s, color 0.4s;
+      }
+      
+      .container { 
+        background-color: var(--card-bg); 
+        width: 100%; 
+        max-width: 1200px; 
+        border-radius: 20px; /* Bordas mais arredondadas (pedagógico) */
+        box-shadow: var(--shadow); 
+        padding: 40px; 
+        box-sizing: border-box; 
+        position: relative;
+        transition: background-color 0.4s;
+      }
+
+      /* =========================================
+         BOTÕES DO TOPO (TEMA E DOCUMENTOS)
+         ========================================= */
+      .top-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .btn-theme, .btn-docs {
+        background-color: var(--bg-color);
+        color: var(--header-color);
+        border: 2px solid var(--border-color);
+        padding: 10px 15px;
+        border-radius: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        font-family: 'Nunito', sans-serif;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-theme:hover, .btn-docs:hover {
+        background-color: var(--header-color);
+        color: #ffffff;
+        border-color: var(--header-color);
+        transform: translateY(-2px);
+      }
+
+      /* =========================================
+         CABEÇALHO E LOGO
+         ========================================= */
+      .header { text-align: center; margin-bottom: 30px; }
+      .logo-ceu { 
+        max-height: 90px; 
+        margin-bottom: 15px;
+        border-radius: 10px;
+      }
+      h2 { color: var(--header-color); margin: 0 0 10px 0; font-size: 28px; font-weight: 800; }
+      .subtitle { color: var(--text-muted); margin: 0; font-size: 16px; font-weight: 600; }
+      
+      /* =========================================
+         FILTROS E BUSCA (Design Colorido)
+         ========================================= */
+      .filters-row, .search-row { display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
+      
+      select, input {
+        flex: 1; 
+        min-width: 200px; 
+        padding: 14px 18px; 
+        border: 2px solid var(--border-color); 
+        border-radius: 12px; 
+        font-size: 15px; 
+        font-family: 'Nunito', sans-serif;
+        font-weight: 600;
+        outline: none; 
+        background-color: var(--input-bg);
+        color: var(--text-main);
+        transition: 0.3s;
+      }
+      select:focus, input:focus { border-color: #4299e1; box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.2); }
+
+      .btn-buscar { 
+        padding: 14px 30px; 
+        background: linear-gradient(135deg, #4299e1, #3182ce);
+        color: white; 
+        border: none; 
+        border-radius: 12px; 
+        font-size: 16px; 
+        font-weight: 800; 
+        cursor: pointer; 
+        transition: 0.3s; 
+        box-shadow: 0 4px 10px rgba(66, 153, 225, 0.3);
+      }
+      .btn-buscar:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(66, 153, 225, 0.4); }
+
+      /* =========================================
+         BOTÕES DOS DIAS DA SEMANA
+         ========================================= */
+      .days-container { display: flex; gap: 10px; justify-content: center; margin-bottom: 30px; flex-wrap: wrap; }
+      .day-btn { 
+        padding: 10px 20px; 
+        border: 2px solid var(--border-color); 
+        border-radius: 20px; 
+        background: var(--input-bg); 
+        color: var(--text-muted); 
+        font-weight: 800; 
+        cursor: pointer; 
+        transition: 0.3s; 
+      }
+      .day-btn:hover { border-color: #ecc94b; color: #d69e2e; }
+      .day-btn.active { background-color: #ecc94b; color: #744210; border-color: #ecc94b; }
+
+      /* =========================================
+         MODAL DE DOCUMENTOS
+         ========================================= */
+      .modal {
+        display: none; 
+        position: fixed; 
+        z-index: 1000; 
+        left: 0; top: 0; 
+        width: 100%; height: 100%; 
+        background-color: rgba(0,0,0,0.5); 
+        backdrop-filter: blur(5px);
+        justify-content: center; align-items: center;
+      }
+      .modal-content {
+        background-color: var(--card-bg);
+        padding: 30px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        position: relative;
+        text-align: left;
+      }
+      .close-modal {
+        position: absolute;
+        top: 15px; right: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-muted);
+        cursor: pointer;
+      }
+      .close-modal:hover { color: #e53e3e; }
+      .modal-title { color: #805ad5; font-size: 22px; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;}
+      .modal-list { font-size: 16px; line-height: 1.8; color: var(--text-main); margin-bottom: 25px; padding-left: 20px;}
+      .modal-list li { margin-bottom: 8px; }
+
+      /* =========================================
+         TABELA E RESULTADOS
+         ========================================= */
+      .loading, .no-results { text-align: center; font-weight: 800; font-size: 18px; margin: 30px 0; padding: 30px; border-radius: 12px; }
+      .loading { color: #2b6cb0; background-color: #ebf8ff; }
+      .no-results { color: #c53030; background-color: #fff5f5; }
+      
+      .table-container { overflow-x: auto; border-radius: 12px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 15px; }
+      th, td { padding: 15px 12px; text-align: center; border-bottom: 2px solid var(--border-color); vertical-align: middle; }
+      th { background-color: var(--table-header); color: var(--header-color); font-weight: 800; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.5px;}
+      tr:hover td { background-color: var(--table-hover); }
+      
+      /* Alinhamento à esquerda das primeiras colunas */
+      th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), 
+      th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4), 
+      th:nth-child(5), td:nth-child(5) { text-align: left; }
+      
+      /* Cores divertidas e marcantes para as Badges (Pedagógico) */
+      .badge { padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 800; display: inline-block; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+      .badge-green { background-color: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; } 
+      .badge-red { background-color: #fed7d7; color: #742a2a; border: 1px solid #feb2b2; } 
+      .badge-purple { background-color: #e9d8fd; color: #44337a; border: 1px solid #d6bcfa; } 
+      .badge-dias { background-color: #bee3f8; color: #2a4365; padding: 6px 10px; border-radius: 8px; font-weight: 800; font-size: 13px; margin-right: 5px; display: inline-block; white-space: nowrap; }
+      .badge-hora { color: var(--text-muted); font-weight: 800; font-size: 14px; white-space: nowrap; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      
+      <div class="top-actions">
+        <button class="btn-docs" onclick="abrirModal()"><i class="fas fa-file-signature"></i> O que preciso para matricular?</button>
+        <button class="btn-theme" onclick="alternarTema()"><i id="icone-tema" class="fas fa-moon"></i></button>
+      </div>
+
+      <div class="header">
+        <img src="https://via.placeholder.com/200x80.png?text=LOGO+DO+CEU" alt="Logo CEU" class="logo-ceu">
+        <h2>CEU CAMINHO DO MAR</h2>
+        <h4 style="color: var(--text-muted); margin: 0 0 15px 0;">Av. Eng. Armando de Arruda Pereira, 5241 - Vila do Encontro</h4>
+        <h3 style="color: #ed8936; margin: 0 0 5px 0; font-weight: 800;">🎈 Consulta Pública de Atividades 🎨</h3>
+        <p class="subtitle">Verifique a disponibilidade de vagas de Segunda à Sexta, das 07h30 às 19h30</p>
+      </div>
+
+      <div class="filters-row">
+        <select id="comboModalidade" onchange="pesquisar()">
+          <option value="">🎯 Modalidade (Todas)</option>
+        </select>
+        
+        <select id="comboNucleo" onchange="pesquisar()">
+          <option value="">🏢 Núcleo (Todos)</option>
+        </select>
+        
+        <select id="comboProfessor" onchange="pesquisar()">
+          <option value="">👨‍🏫 Professor (Todos)</option>
+        </select>
+        
+        <select id="comboEspaco" onchange="pesquisar()">
+          <option value="">📍 Espaço (Todos)</option>
+        </select>
+      </div>
+
+      <div class="search-row">
+        <input type="text" id="termo" placeholder="🔍 Ou digite o nome de uma atividade livremente..." onkeypress="verificarEnter(event)">
+        <button class="btn-buscar" onclick="pesquisar()"><i class="fas fa-search"></i> Buscar Atividades</button>
+      </div>
+
+      <div class="days-container">
+        <button class="day-btn" onclick="toggleDia('DOM', this)">DOM</button>
+        <button class="day-btn" onclick="toggleDia('SEG', this)">SEG</button>
+        <button class="day-btn" onclick="toggleDia('TER', this)">TER</button>
+        <button class="day-btn" onclick="toggleDia('QUA', this)">QUA</button>
+        <button class="day-btn" onclick="toggleDia('QUI', this)">QUI</button>
+        <button class="day-btn" onclick="toggleDia('SEX', this)">SEX</button>
+        <button class="day-btn" onclick="toggleDia('SAB', this)">SAB</button>
+      </div>
+
+      <div id="resultado" class="table-container">
+          </div>
+    </div>
+
+    <div id="modalDocumentos" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="fecharModal()">&times;</span>
+        <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
+        <p style="color: var(--text-muted); font-weight: 600; margin-top: -10px; margin-bottom: 20px;">
+          Para realizar sua matrícula, compareça à nossa secretaria portando os seguintes documentos (originais e cópias):
+        </p>
+        <ul class="modal-list">
+          <li><strong>Documento de Identidade:</strong> RG ou Certidão de Nascimento;</li>
+          <li><strong>Comprovante de Residência:</strong> Atualizado (últimos 3 meses);</li>
+          <li><strong>Saúde:</strong> Carteirinha do SUS;</li>
+          <li><strong>Foto:</strong> 1 Foto 3x4 recente;</li>
+          <li><strong>Para menores de idade:</strong> Declaração de Matrícula Escolar atualizada e presença do Responsável Legal.</li>
+        </ul>
+        <div style="text-align: right;">
+          <button class="btn-buscar" onclick="fecharModal()">Entendi! 👍</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let diasSelecionados = [];
+
+      // =====================================
+      // FUNÇÕES DO MODO ESCURO E MODAL
+      // =====================================
+      function alternarTema() {
+        document.body.classList.toggle('dark-mode');
+        const icone = document.getElementById('icone-tema');
+        if (document.body.classList.contains('dark-mode')) {
+          icone.classList.replace('fa-moon', 'fa-sun');
+        } else {
+          icone.classList.replace('fa-sun', 'fa-moon');
+        }
+      }
+
+      function abrirModal() {
+        document.getElementById('modalDocumentos').style.display = 'flex';
+      }
+      function fecharModal() {
+        document.getElementById('modalDocumentos').style.display = 'none';
+      }
+
+      // 🌟 AO ABRIR O APLICATIVO, BUSCA AS LISTAS
+      document.addEventListener("DOMContentLoaded", function() {
+        google.script.run.withSuccessHandler(preencherCombos).buscarOpcoesCombos();
+      });
+
+      function preencherCombos(opcoes) {
+        const comboMod = document.getElementById('comboModalidade');
+        opcoes.modalidades.forEach(function(mod) {
+          const option = document.createElement("option");
+          option.value = mod; option.text = mod;
+          comboMod.appendChild(option);
+        });
+
+        const comboNuc = document.getElementById('comboNucleo');
+        opcoes.nucleos.forEach(function(nuc) {
+          const option = document.createElement("option");
+          option.value = nuc; option.text = nuc;
+          comboNuc.appendChild(option);
+        });
+
+        const comboProf = document.getElementById('comboProfessor');
+        opcoes.professores.forEach(function(prof) {
+          const option = document.createElement("option");
+          option.value = prof.nome;
+          option.text = prof.tipo !== "" ? prof.nome + " (" + prof.tipo + ")" : prof.nome;
+          comboProf.appendChild(option);
+        });
+
+        const comboEsp = document.getElementById('comboEspaco');
+        opcoes.espacos.forEach(function(esp) {
+          const option = document.createElement("option");
+          option.value = esp; option.text = esp;
+          comboEsp.appendChild(option);
+        });
+      }
+
+      function verificarEnter(event) {
+        if (event.key === 'Enter') pesquisar();
+      }
+
+      function toggleDia(dia, btn) {
+        btn.classList.toggle('active');
+        if (diasSelecionados.includes(dia)) {
+          diasSelecionados = diasSelecionados.filter(d => d !== dia);
+        } else {
+          diasSelecionados.push(dia);
+        }
+        pesquisar();
+      }
+
+      function pesquisar() {
+        var termo          = document.getElementById('termo').value;
+        var modSelecionada = document.getElementById('comboModalidade').value;
+        var nucSelecionado = document.getElementById('comboNucleo').value;
+        var profSelecionado= document.getElementById('comboProfessor').value;
+        var espSelecionado = document.getElementById('comboEspaco').value;
+        
+        if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
+           document.getElementById('resultado').innerHTML = "<div class='no-results'>✌️ Por favor, escolha uma opção nos filtros ou digite algo para começarmos!</div>";
+           // document.getElementById('btn-imprimir').style.display = 'none'; // Botão imprimir escondido
+           return;
+        }
+
+        document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades mágicas para você, aguarde um instante...</div>";
+        // document.getElementById('btn-imprimir').style.display = 'none'; // Botão imprimir escondido
+        
+        google.script.run.withSuccessHandler(mostrarResultados).buscarDados(termo, diasSelecionados, profSelecionado, modSelecionada, nucSelecionado, espSelecionado);
+      }
+
+      function mostrarResultados(dados) {
+        if (dados.length == 0) {
+          document.getElementById('resultado').innerHTML = "<div class='no-results'>Puxa! Nenhuma turma encontrada com estes filtros. 😔 Que tal tentar outros dias ou atividades?</div>";
+          return;
+        }
+
+        // document.getElementById('btn-imprimir').style.display = 'block'; // Botão imprimir escondido
+
+        var tabela = "<table>" +
+                     "<tr>" +
+                       "<th>Turma</th>" +
+                       "<th>Atividade</th>" +
+                       "<th>Local / Espaço</th>" +
+                       "<th>Professor(a)</th>" +
+                       "<th>Dias e Horários</th>" + 
+                       "<th>Status da Turma</th>" + 
+                     "</tr>";
+        
+        for (var i = 0; i < dados.length; i++) {
+          var turma = dados[i]; 
+          
+          // Lógica de Status: Tem Vaga ou Lista de Espera?
+          var statusVisual = turma.vagasDisponiveis > 0 ? 
+                             "<span class='badge badge-green'>VAGAS ABERTAS ✅</span>" : 
+                             "<span class='badge badge-red'>LISTA DE ESPERA ⏳</span>";
+          
+          var diasFormatados = turma.dias ? "<span class='badge-dias'>" + turma.dias + "</span>" : "";
+          var horaFormatada = turma.horario ? "<span class='badge-hora'><i class='far fa-clock'></i> " + turma.horario + "</span>" : "";
+
+          tabela += "<tr>" +
+            "<td><strong style='color:#3182ce; font-size: 16px;'>" + (turma.turma || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.nucleo || "") + "</small></td>" + 
+            "<td><strong style='font-size: 16px;'>" + (turma.modalidade || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.sufixo || "") + "</small></td>" + 
+            "<td>" + (turma.espaco || "-") + "</td>" + 
+            "<td>" + (turma.professor || "-") + "</td>" + 
+            "<td>" + diasFormatados + "<br>" + horaFormatada + "</td>" + 
+            "<td>" + statusVisual + "</td>" + 
+            "</tr>";
+        }
+        tabela += "</table>";
+        document.getElementById('resultado').innerHTML = tabela;
+      }
+    </script>
+  </body>
+</html>
