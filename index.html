@@ -436,10 +436,10 @@
         var profSelecionado = document.getElementById('comboProfessor').value;
         var espSelecionado = document.getElementById('comboEspaco').value;
         
-     /*   if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
-           document.getElementById('resultado').innerHTML = "<div class='no-results'>✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!</div>";
+        if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
+           document.getElementById('resultado').innerHTML = "<div class='no-results'> </div>";
            return;
-        } */
+        } 
 
         document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades, aguarde...</div>";
         
