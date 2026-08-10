@@ -393,30 +393,28 @@
           });
       }
 
-      function mostrarResultados(dados) {
+function mostrarResultados(dados) {
         if (dados.length == 0) {
           document.getElementById('resultado').innerHTML = "<div class='no-results'>Puxa! Nenhuma turma encontrada com estes filtros. 😔 Que tal tentar outros dias ou atividades?</div>";
           return;
         }
 
-        var tabela = "<table><tr><th>Turma</th><th>Atividade</th><th>Local / Espaço</th><th>Professor(a)</th><th>Dias e Horários</th><th>Status da Turma</th></tr>";
+        // ❌ Removi o <th>Status da Turma</th> daqui:
+        var tabela = "<table><tr><th>Turma</th><th>Atividade</th><th>Local / Espaço</th><th>Professor(a)</th><th>Dias e Horários</th></tr>";
         
         for (var i = 0; i < dados.length; i++) {
           var turma = dados[i]; 
-          var statusVisual = turma.vagasDisponiveis > 0 ? 
-                             "<span class='badge badge-green'>VAGAS ABERTAS ✅</span>" : 
-                             "<span class='badge badge-red'>LISTA DE ESPERA ⏳</span>";
           
           var diasFormatados = turma.dias ? "<span class='badge-dias'>" + turma.dias + "</span>" : "";
           var horaFormatada = turma.horario ? "<span class='badge-hora'><i class='far fa-clock'></i> " + turma.horario + "</span>" : "";
 
+          // ❌ Removi a lógica das vagas e o <td> do statusVisual daqui:
           tabela += "<tr>" +
             "<td><strong style='color:#3182ce; font-size: 16px;'>" + (turma.turma || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.nucleo || "") + "</small></td>" + 
             "<td><strong style='font-size: 16px;'>" + (turma.modalidade || "-") + "</strong><br><small style='color:var(--text-muted);'>" + (turma.sufixo || "") + "</small></td>" + 
             "<td>" + (turma.espaco || "-") + "</td>" + 
             "<td>" + (turma.professor || "-") + "</td>" + 
             "<td>" + diasFormatados + "<br>" + horaFormatada + "</td>" + 
-            "<td>" + statusVisual + "</td>" + 
             "</tr>";
         }
         tabela += "</table>";
