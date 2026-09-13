@@ -157,23 +157,17 @@
       <div id="resultado" class="table-container"></div>
     </div>
 
-    <!-- MODAL DE DOCUMENTOS MANTIDO -->
+<!-- MODAL DE DOCUMENTOS DINÂMICO -->
     <div id="modalDocumentos" class="modal">
       <div class="modal-content">
         <span class="close-modal" onclick="fecharModal()">&times;</span>
         <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
-        <div style="color: var(--text-muted); font-size: 13px; margin-top: -6px; margin-bottom: 15px;">
-          <h4 style="margin: 0 0 5px 0; color: var(--text-main);">VERIFIQUE AS VAGAS DISPONÍVEIS EM NOSSA SECRETARIA</h4> 
-          <p style="margin: 0 0 10px 0;">de Segunda à Sexta, das 07h30 às 19h30</p> 
-          <p style="margin: 0;">Em havendo vagas disponíveis, traga os seguintes documentos (originais e <strong>cópias legíveis</strong>):</p>
+        
+        <!-- O container invisível que receberá o texto da G1 -->
+        <div id="texto-regras-documentos" style="color: var(--text-main); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">
+           <i>Aguarde, carregando as regras da unidade...</i>
         </div>
-        <ul class="modal-list">
-          <li><strong>Documento de Identidade:</strong> CIN ou documento com foto;</li>
-          <li><strong>Comprovante de Residência:</strong> Atualizado (últimos 3 meses);</li>
-          <li><strong>Foto:</strong> Tiramos foto;</li>
-          <li><strong>Para menores de idade:</strong> CIN ou Certidão de Nascimento;</li>
-          <li><strong>Parentes (tios, tias, avôs, avós):</strong> CIN e carta de próprio punho redigida pelo(a) responsável Legal pelo(a) menor.</li>
-        </ul>
+
         <div style="text-align: right;">
           <button class="btn-buscar" onclick="fecharModal()">Entendi! 👍</button>
         </div>
@@ -278,7 +272,7 @@
           .catch(erro => console.log("Erro ao carregar combos locais: ", erro));
       }
 
-      function preencherCombos(opcoes) {
+function preencherCombos(opcoes) {
         const comboMod = document.getElementById('comboModalidade');
         opcoes.modalidades.forEach(mod => comboMod.appendChild(new Option(mod, mod)));
 
@@ -293,6 +287,12 @@
 
         const comboEsp = document.getElementById('comboEspaco');
         opcoes.espacos.forEach(esp => comboEsp.appendChild(new Option(esp, esp)));
+
+        // 🌟 INJEÇÃO DINÂMICA DAS REGRAS NO MODAL
+        if (opcoes.regras) {
+           // O comando replace converte as quebras de linha da planilha para exibição no site
+           document.getElementById('texto-regras-documentos').innerHTML = opcoes.regras.replace(/\n/g, '<br>');
+        }
       }
 
       function pesquisar() {
