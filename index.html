@@ -207,12 +207,16 @@
         pesquisar();
       }
 
-      // ====================================================
-      // CONEXÃO COM A PLANILHA MASTER
+// ====================================================
+      // CONEXÃO BLINDADA (POST) COM A PLANILHA MASTER
       // ====================================================
       document.addEventListener("DOMContentLoaded", function() {
-        // 1. Busca os dados visuais e a lista de 69 CEUs
-        fetch(API_URL + "&acao=obterListaCEUsMaster")
+        // 1. Busca os dados visuais e a lista de CEUs usando POST (o padrão seguro do sistema)
+        fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ acao: "obterListaCEUsMaster", dados: {} })
+        })
           .then(resposta => resposta.json())
           .then(retorno => {
             if (retorno.status === "sucesso") {
