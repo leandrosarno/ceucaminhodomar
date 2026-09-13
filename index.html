@@ -343,19 +343,18 @@
 
         <button class="btn-buscar" onclick="pesquisar()"><i class="fas fa-search"></i> Buscar</button>
       </div>
-      
-      <div style="margin-bottom: 15px; font-size: 14px; font-weight: 600; color: var(--text-muted);">
-        ✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!
+        <div style="margin-bottom: 15px; font-size: 14px; font-weight: 600; color: var(--text-muted);">
+          ✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!
+        </div>
+      <div id="resultado" class="table-container">
       </div>
-      
-      <div id="resultado" class="table-container"></div>
     </div>
 
     <div id="modalDocumentos" class="modal">
       <div class="modal-content">
         <span class="close-modal" onclick="fecharModal()">&times;</span>
         <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
-        <div style="color: var(--text-muted); font-size: 13px; margin-top: -6px; margin-bottom: 15px;">
+        <div style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: -6px; margin-bottom: 15px;">
           <h4 style="margin: 0 0 5px 0; color: var(--text-main);">VERIFIQUE AS VAGAS DISPONÍVEIS EM NOSSA SECRETARIA</h4> 
           <p style="margin: 0 0 10px 0;">de Segunda à Sexta, das 07h30 às 19h30</p> 
           <p style="margin: 0;">Em havendo vagas disponíveis, traga os seguintes documentos (originais e <strong>cópias legíveis</strong>):</p>
@@ -409,37 +408,13 @@
       // ====================================================
       // COMUNICAÇÃO COM O GOOGLE SHEETS VIA API / FETCH
       // ====================================================
-// ====================================================
-      // COMUNICAÇÃO COM O GOOGLE SHEETS VIA API / FETCH
-      // ====================================================
-      document.addEventListener("DOMContentLoaded", function() {
-        
-        // O código EOL do CEU Caminho do Mar para o servidor saber onde buscar
-        const pacoteRequisicao = {
-            acao: "buscarCombos",
-            dados: { idCeu: "700039" } 
-        };
 
-        // Usamos o método POST com text/plain para blindar a conexão contra bloqueios
-        fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(pacoteRequisicao)
-        })
-        .then(resposta => resposta.json())
-        .then(retorno => {
-            // A blindagem que avisa se o Google retornar algum erro na busca
-            if (retorno.sucesso || retorno.status === "sucesso") {
-                preencherCombos(retorno.dados || retorno);
-            } else {
-                console.error("Erro do servidor:", retorno.erro || retorno.mensagem);
-                alert("Atenção: " + (retorno.erro || retorno.mensagem));
-            }
-        })
-        .catch(erro => {
-            console.log("Falha de conexão: ", erro);
-            document.getElementById('resultado').innerHTML = "<div class='no-results'>Erro de comunicação com o servidor. Tente atualizar a página.</div>";
-        });
+      document.addEventListener("DOMContentLoaded", function() {
+        // Usa o método GET idêntico ao original, apenas com o novo link
+        fetch(API_URL + "&acao=buscarCombos")
+          .then(resposta => resposta.json())
+          .then(dados => preencherCombos(dados))
+          .catch(erro => console.log("Erro ao carregar os combos: ", erro));
       });
 
       function preencherCombos(opcoes) {
@@ -483,6 +458,7 @@
           esp: espSelecionado
         });
 
+        // Usa o método GET idêntico ao original, apenas com o novo link
         fetch(API_URL + "&" + params.toString())
           .then(resposta => resposta.json())
           .then(dados => mostrarResultados(dados))
