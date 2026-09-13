@@ -343,18 +343,23 @@
 
         <button class="btn-buscar" onclick="pesquisar()"><i class="fas fa-search"></i> Buscar</button>
       </div>
-        <div>✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!</div>
-      <div id="resultado" class="table-container">
-          </div>
+      
+      <div style="margin-bottom: 15px; font-size: 14px; font-weight: 600; color: var(--text-muted);">
+        ✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!
+      </div>
+      
+      <div id="resultado" class="table-container"></div>
     </div>
 
     <div id="modalDocumentos" class="modal">
       <div class="modal-content">
         <span class="close-modal" onclick="fecharModal()">&times;</span>
         <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
-        <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: -6px; margin-bottom: 15px;">
-          <strong><h2>VERIFIQUE AS VAGAS DISPONÍVEIS EM NOSSA SECRETARIA</h2></strong> <p>de Segunda à Sexta, das 07h30 às 19h30</p> Em havendo vagas disponíveis, traga os seguintes documentos (originais e <strong>cópias legíveis</strong>):
-        </p>
+        <div style="color: var(--text-muted); font-size: 13px; margin-top: -6px; margin-bottom: 15px;">
+          <h4 style="margin: 0 0 5px 0; color: var(--text-main);">VERIFIQUE AS VAGAS DISPONÍVEIS EM NOSSA SECRETARIA</h4> 
+          <p style="margin: 0 0 10px 0;">de Segunda à Sexta, das 07h30 às 19h30</p> 
+          <p style="margin: 0;">Em havendo vagas disponíveis, traga os seguintes documentos (originais e <strong>cópias legíveis</strong>):</p>
+        </div>
         <ul class="modal-list">
           <li><strong>Documento de Identidade:</strong> CIN ou documento com foto;</li>
           <li><strong>Comprovante de Residência:</strong> Atualizado (últimos 3 meses);</li>
@@ -370,11 +375,9 @@
 
     <script>
       // ====================================================
-      // 🚨 COLOQUE O LINK DO SEU WEB APP AQUI (COM /exec NO FINAL)
+      // LINK DA NOVA IMPLANTAÇÃO CONFIGURADO
       // ====================================================
       const LINK_DO_GOOGLE = "https://script.google.com/macros/s/AKfycbyUqh6yg6wKCHPL4LzIA3kS5y7d2Md0Ll9P9zG5tue3km-25q636qAwDodXpVE2nCSf/exec";
-      /* NOVAS IMPLATNAÇÃO: https://script.google.com/macros/s/AKfycbyUqh6yg6wKCHPL4LzIA3kS5y7d2Md0Ll9P9zG5tue3km-25q636qAwDodXpVE2nCSf/exec */
-      /* IMPLANTAÇÃO ANTIGA: https://script.google.com/macros/s/AKfycbxJG6E8mTA3CPA-_ZLtSILVC17QOejNfspG6dV0qJ-WB-JS5HkiN6d20vpec7-xfus8/exec */
       const API_URL = LINK_DO_GOOGLE + "?api=sim";
 
       let diasSelecionados = [];
@@ -406,7 +409,6 @@
       // ====================================================
       // COMUNICAÇÃO COM O GOOGLE SHEETS VIA API / FETCH
       // ====================================================
-
       document.addEventListener("DOMContentLoaded", function() {
         fetch(API_URL + "&acao=buscarCombos")
           .then(resposta => resposta.json())
