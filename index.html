@@ -6,9 +6,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-      /* =========================================
-         VARIÁVEIS DE CORES (MODO CLARO E ESCURO)
-         ========================================= */
       :root {
         --bg-color: #f0f7f4;
         --card-bg: #ffffff;
@@ -35,250 +32,48 @@
         --shadow: 0 8px 20px rgba(0,0,0,0.3);
       }
 
-      /* =========================================
-         ESTILOS GERAIS E LAYOUT ENXUTO
-         ========================================= */
-      body { 
-        font-family: 'Nunito', sans-serif; 
-        background-color: var(--bg-color); 
-        color: var(--text-main);
-        margin: 0; 
-        padding: 12px; 
-        display: flex; 
-        justify-content: center; 
-        transition: background-color 0.3s, color 0.3s;
-      }
-      
-      .container { 
-        background-color: var(--card-bg); 
-        width: 100%; 
-        max-width: 1100px; 
-        border-radius: 16px; 
-        box-shadow: var(--shadow); 
-        padding: 20px 24px; 
-        box-sizing: border-box; 
-        position: relative;
-        transition: background-color 0.3s;
-      }
+      body { font-family: 'Nunito', sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; display: flex; justify-content: center; transition: background-color 0.3s, color 0.3s; }
+      .container { background-color: var(--card-bg); width: 100%; max-width: 1100px; border-radius: 16px; box-shadow: var(--shadow); padding: 20px 24px; box-sizing: border-box; position: relative; transition: background-color 0.3s; }
 
-      /* =========================================
-         BARRA SUPERIOR (CABEÇALHO + AÇÕES)
-         ========================================= */
-      .top-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        border-bottom: 2px solid var(--border-color);
-        padding-bottom: 12px;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-      }
+      .top-header { display: flex; justify-content: space-between; align-items: center; gap: 15px; border-bottom: 2px solid var(--border-color); padding-bottom: 12px; margin-bottom: 15px; flex-wrap: wrap; }
+      .header-brand { display: flex; align-items: center; gap: 12px; }
+      .logo-ceu { max-height: 58px; width: auto; border-radius: 8px; object-fit: contain; }
+      .header-titles h2 { color: var(--header-color); margin: 0; font-size: 20px; font-weight: 800; line-height: 1.1; }
+      .header-titles .address { color: var(--text-muted); margin: 2px 0 0 0; font-size: 12px; font-weight: 600; }
+      .header-titles .page-tag { color: #ed8936; font-size: 13px; font-weight: 800; margin-top: 2px; display: block; }
+      .top-actions { display: flex; align-items: center; gap: 8px; }
+      .btn-theme, .btn-docs { background-color: var(--bg-color); color: var(--header-color); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 10px; font-weight: 800; font-size: 13px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; }
+      .btn-theme:hover, .btn-docs:hover { background-color: var(--header-color); color: #ffffff; border-color: var(--header-color); }
 
-      .header-brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .logo-ceu { 
-        max-height: 58px; 
-        width: auto;
-        border-radius: 8px;
-        object-fit: contain;
-      }
-
-      .header-titles h2 { 
-        color: var(--header-color); 
-        margin: 0; 
-        font-size: 20px; 
-        font-weight: 800; 
-        line-height: 1.1;
-      }
-
-      .header-titles .address { 
-        color: var(--text-muted); 
-        margin: 2px 0 0 0; 
-        font-size: 12px; 
-        font-weight: 600; 
-      }
-
-      .header-titles .page-tag {
-        color: #ed8936;
-        font-size: 13px;
-        font-weight: 800;
-        margin-top: 2px;
-        display: block;
-      }
-
-      .top-actions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .btn-theme, .btn-docs {
-        background-color: var(--bg-color);
-        color: var(--header-color);
-        border: 1px solid var(--border-color);
-        padding: 8px 12px;
-        border-radius: 10px;
-        font-weight: 800;
-        font-size: 13px;
-        cursor: pointer;
-        font-family: 'Nunito', sans-serif;
-        transition: 0.2s;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .btn-theme:hover, .btn-docs:hover {
-        background-color: var(--header-color);
-        color: #ffffff;
-        border-color: var(--header-color);
-      }
-
-      /* =========================================
-         FILTROS (COMBOS)
-         ========================================= */
-      .filters-row { 
-        display: flex; 
-        gap: 10px; 
-        margin-bottom: 12px; 
-        flex-wrap: wrap; 
-      }
-      
-      select {
-        flex: 1; 
-        min-width: 140px; 
-        padding: 8px 12px; 
-        border: 1.5px solid var(--border-color); 
-        border-radius: 10px; 
-        font-size: 13px; 
-        font-family: 'Nunito', sans-serif;
-        font-weight: 700;
-        outline: none; 
-        background-color: var(--input-bg);
-        color: var(--text-main);
-        transition: 0.2s;
-      }
+      .filters-row { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+      select { flex: 1; min-width: 140px; padding: 8px 12px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 13px; font-weight: 700; outline: none; background-color: var(--input-bg); color: var(--text-main); transition: 0.2s; }
       select:focus { border-color: #4299e1; }
 
-      /* =========================================
-         BARRA DE BUSCA COMPACTA + DIAS INTEGRADOS
-         ========================================= */
-      .search-days-box {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background-color: var(--input-bg);
-        border: 1.5px solid var(--border-color);
-        padding: 6px 10px;
-        border-radius: 12px;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-      }
-
-      .search-days-box input {
-        flex: 2;
-        min-width: 160px;
-        padding: 6px 8px;
-        border: none;
-        font-size: 13px;
-        font-family: 'Nunito', sans-serif;
-        font-weight: 600;
-        outline: none;
-        background: transparent;
-        color: var(--text-main);
-      }
-
-      .days-inline {
-        display: flex;
-        gap: 4px;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-
-      .day-btn { 
-        padding: 5px 9px; 
-        border: 1px solid var(--border-color); 
-        border-radius: 14px; 
-        background: var(--card-bg); 
-        color: var(--text-muted); 
-        font-weight: 800; 
-        font-size: 11px;
-        cursor: pointer; 
-        transition: 0.2s; 
-      }
+      .search-days-box { display: flex; align-items: center; gap: 8px; background-color: var(--input-bg); border: 1.5px solid var(--border-color); padding: 6px 10px; border-radius: 12px; margin-bottom: 15px; flex-wrap: wrap; }
+      .search-days-box input { flex: 2; min-width: 160px; padding: 6px 8px; border: none; font-size: 13px; font-weight: 600; outline: none; background: transparent; color: var(--text-main); }
+      .days-inline { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; justify-content: center; }
+      .day-btn { padding: 5px 9px; border: 1px solid var(--border-color); border-radius: 14px; background: var(--card-bg); color: var(--text-muted); font-weight: 800; font-size: 11px; cursor: pointer; transition: 0.2s; }
       .day-btn:hover { border-color: #ecc94b; color: #d69e2e; }
       .day-btn.active { background-color: #ecc94b; color: #744210; border-color: #ecc94b; }
-
-      .btn-buscar { 
-        padding: 8px 18px; 
-        background: linear-gradient(135deg, #4299e1, #3182ce);
-        color: white; 
-        border: none; 
-        border-radius: 10px; 
-        font-size: 13px; 
-        font-weight: 800; 
-        cursor: pointer; 
-        transition: 0.2s; 
-        white-space: nowrap;
-      }
+      .btn-buscar { padding: 8px 18px; background: linear-gradient(135deg, #4299e1, #3182ce); color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; white-space: nowrap; }
       .btn-buscar:hover { opacity: 0.9; }
 
-      /* =========================================
-         MODAL DE DOCUMENTOS
-         ========================================= */
-      .modal {
-        display: none; 
-        position: fixed; 
-        z-index: 1000; 
-        left: 0; top: 0; 
-        width: 100%; height: 100%; 
-        background-color: rgba(0,0,0,0.5); 
-        backdrop-filter: blur(4px);
-        justify-content: center; align-items: center;
-      }
-      .modal-content {
-        background-color: var(--card-bg);
-        padding: 24px;
-        border-radius: 16px;
-        width: 90%;
-        max-width: 460px;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        position: relative;
-      }
-      .close-modal {
-        position: absolute;
-        top: 12px; right: 16px;
-        font-size: 22px;
-        font-weight: bold;
-        color: var(--text-muted);
-        cursor: pointer;
-      }
+      .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; }
+      .modal-content { background-color: var(--card-bg); padding: 24px; border-radius: 16px; width: 90%; max-width: 460px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); position: relative; }
+      .close-modal { position: absolute; top: 12px; right: 16px; font-size: 22px; font-weight: bold; color: var(--text-muted); cursor: pointer; }
       .close-modal:hover { color: #e53e3e; }
       .modal-title { color: #805ad5; font-size: 19px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;}
       .modal-list { font-size: 14px; line-height: 1.7; color: var(--text-main); margin-bottom: 20px; padding-left: 18px;}
 
-      /* =========================================
-         TABELA E RESULTADOS
-         ========================================= */
       .loading, .no-results { text-align: center; font-weight: 800; font-size: 15px; margin: 20px 0; padding: 20px; border-radius: 10px; }
       .loading { color: #2b6cb0; background-color: #ebf8ff; }
       .no-results { color: #c53030; background-color: #fff5f5; }
-      
       .table-container { overflow-x: auto; border-radius: 10px; }
       table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 13px; }
       th, td { padding: 10px 10px; text-align: center; border-bottom: 1.5px solid var(--border-color); vertical-align: middle; }
       th { background-color: var(--table-header); color: var(--header-color); font-weight: 800; white-space: nowrap; text-transform: uppercase; font-size: 12px;}
       tr:hover td { background-color: var(--table-hover); }
-      
-      th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), 
-      th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4) { text-align: left; }
-      
+      th:nth-child(1), td:nth-child(1), th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3), th:nth-child(4), td:nth-child(4) { text-align: left; }
       .badge-dias { background-color: #bee3f8; color: #2a4365; padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 11px; margin-right: 4px; display: inline-block; white-space: nowrap; }
       .badge-hora { color: var(--text-muted); font-weight: 700; font-size: 12px; white-space: nowrap; }
 
@@ -294,12 +89,13 @@
   <body>
     <div class="container">
       
+      <!-- CABEÇALHO DINÂMICO -->
       <div class="top-header">
         <div class="header-brand">
-          <img src="https://drive.google.com/thumbnail?id=1_QvlG1xHgKY_ukxAF9C4V-VhHbG9d-Q1&sz=w800" alt="Logo CEU" class="logo-ceu">
+          <img id="img-logo-ceu" src="https://via.placeholder.com/80?text=LOGO" alt="Logo CEU" class="logo-ceu">
           <div class="header-titles">
-            <h2>CEU CAMINHO DO MAR</h2>
-            <p class="address">Av. Eng. Armando de Arruda Pereira, 5241 - Vila do Encontro</p>
+            <h2 id="txt-nome-ceu">Buscando Unidades...</h2>
+            <p id="txt-endereco-ceu" class="address">Aguarde, carregando endereço da Master...</p>
             <span class="page-tag">🎈 Consulta de Atividades - 🚨 *** PORTAL INTERNO - NÃO DIVULGAR *** 🚨</span>
           </div>
         </div>
@@ -308,6 +104,16 @@
           <button class="btn-docs" onclick="abrirModal()"><i class="fas fa-file-signature"></i> Documentos</button>
           <button class="btn-theme" onclick="alternarTema()"><i id="icone-tema" class="fas fa-moon"></i></button>
         </div>
+      </div>
+
+      <!-- SELETOR MESTRE DE UNIDADE -->
+      <div class="search-days-box" style="margin-bottom: 20px; background-color: #ebf8ff; border-color: #90cdf4;">
+        <span style="font-weight: 800; color: #2b6cb0; font-size: 15px; display: flex; align-items: center; gap: 8px; margin-right: 10px;">
+          <i class="fas fa-map-marker-alt"></i> Visualizar Unidade:
+        </span>
+        <select id="comboCeuMestre" onchange="trocarCeu()" style="flex: 1; border: 2px solid #63b3ed; background: white; font-size: 14px; color: #2b6cb0; font-weight: 800; padding: 6px 12px; cursor: pointer;">
+          <option value="">Aguarde, conectando ao banco de dados...</option>
+        </select>
       </div>
 
       <div class="filters-row">
@@ -343,18 +149,20 @@
 
         <button class="btn-buscar" onclick="pesquisar()"><i class="fas fa-search"></i> Buscar</button>
       </div>
-        <div style="margin-bottom: 15px; font-size: 14px; font-weight: 600; color: var(--text-muted);">
-          ✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!
-        </div>
-      <div id="resultado" class="table-container">
+      
+      <div style="margin-bottom: 15px; font-size: 14px; font-weight: 600; color: var(--text-muted);">
+        ✌️ Escolha uma opção nos filtros acima ou digite algo para buscar!
       </div>
+      
+      <div id="resultado" class="table-container"></div>
     </div>
 
+    <!-- MODAL DE DOCUMENTOS MANTIDO -->
     <div id="modalDocumentos" class="modal">
       <div class="modal-content">
         <span class="close-modal" onclick="fecharModal()">&times;</span>
         <h3 class="modal-title"><i class="fas fa-folder-open"></i> Documentos Necessários</h3>
-        <div style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: -6px; margin-bottom: 15px;">
+        <div style="color: var(--text-muted); font-size: 13px; margin-top: -6px; margin-bottom: 15px;">
           <h4 style="margin: 0 0 5px 0; color: var(--text-main);">VERIFIQUE AS VAGAS DISPONÍVEIS EM NOSSA SECRETARIA</h4> 
           <p style="margin: 0 0 10px 0;">de Segunda à Sexta, das 07h30 às 19h30</p> 
           <p style="margin: 0;">Em havendo vagas disponíveis, traga os seguintes documentos (originais e <strong>cópias legíveis</strong>):</p>
@@ -373,13 +181,11 @@
     </div>
 
     <script>
-      // ====================================================
-      // LINK DA NOVA IMPLANTAÇÃO CONFIGURADO
-      // ====================================================
       const LINK_DO_GOOGLE = "https://script.google.com/macros/s/AKfycbyUqh6yg6wKCHPL4LzIA3kS5y7d2Md0Ll9P9zG5tue3km-25q636qAwDodXpVE2nCSf/exec";
       const API_URL = LINK_DO_GOOGLE + "?api=sim";
 
       let diasSelecionados = [];
+      let dicionarioCEUs = {}; // Vai armazenar todos os dados visuais da Master
 
       function alternarTema() {
         document.body.classList.toggle('dark-mode');
@@ -394,28 +200,79 @@
       function abrirModal() { document.getElementById('modalDocumentos').style.display = 'flex'; }
       function fecharModal() { document.getElementById('modalDocumentos').style.display = 'none'; }
       function verificarEnter(event) { if (event.key === 'Enter') pesquisar(); }
-
       function toggleDia(dia, btn) {
         btn.classList.toggle('active');
-        if (diasSelecionados.includes(dia)) {
-          diasSelecionados = diasSelecionados.filter(d => d !== dia);
-        } else {
-          diasSelecionados.push(dia);
-        }
+        if (diasSelecionados.includes(dia)) { diasSelecionados = diasSelecionados.filter(d => d !== dia); } 
+        else { diasSelecionados.push(dia); }
         pesquisar();
       }
 
       // ====================================================
-      // COMUNICAÇÃO COM O GOOGLE SHEETS VIA API / FETCH
+      // CONEXÃO COM A PLANILHA MASTER
       // ====================================================
-
       document.addEventListener("DOMContentLoaded", function() {
-        // Usa o método GET idêntico ao original, apenas com o novo link
-        fetch(API_URL + "&acao=buscarCombos")
+        // 1. Busca os dados visuais e a lista de 69 CEUs
+        fetch(API_URL + "&acao=obterListaCEUsMaster")
+          .then(resposta => resposta.json())
+          .then(retorno => {
+            if (retorno.status === "sucesso") {
+              dicionarioCEUs = retorno.ceus;
+              const comboMestre = document.getElementById('comboCeuMestre');
+              comboMestre.innerHTML = '<option value="">-- Selecione uma Unidade --</option>';
+
+              // Ordena em Ordem Alfabética
+              let arrayCeus = Object.keys(dicionarioCEUs).map(id => ({ id: id, nome: dicionarioCEUs[id].nome }));
+              arrayCeus.sort((a, b) => a.nome.localeCompare(b.nome));
+
+              arrayCeus.forEach(ceu => {
+                comboMestre.appendChild(new Option(ceu.nome, ceu.id));
+              });
+
+              // Seleciona Caminho do Mar (700039) como padrão se existir
+              if (dicionarioCEUs["700039"]) {
+                comboMestre.value = "700039";
+                trocarCeu();
+              }
+            } else {
+              document.getElementById('txt-nome-ceu').innerText = "Erro de Conexão";
+              alert("Erro ao carregar CEUs: " + retorno.mensagem);
+            }
+          })
+          .catch(erro => console.log("Erro na Master: ", erro));
+      });
+
+      // 2. Transforma o Visual e Busca as Modalidades da Unidade
+      function trocarCeu() {
+        const idCeuSelecionado = document.getElementById('comboCeuMestre').value;
+        if (!idCeuSelecionado) return;
+
+        // Atualiza Logotipo, Nome e Endereço sem precisar buscar no servidor de novo!
+        const dadosUnidade = dicionarioCEUs[idCeuSelecionado];
+        document.getElementById('txt-nome-ceu').innerText = "CEU " + dadosUnidade.nome;
+        
+        let textoEndereco = dadosUnidade.endereco;
+        if (dadosUnidade.telefone) textoEndereco += " | Tel: " + dadosUnidade.telefone;
+        document.getElementById('txt-endereco-ceu').innerText = textoEndereco;
+
+        if (dadosUnidade.logo) {
+          document.getElementById('img-logo-ceu').src = dadosUnidade.logo;
+        } else {
+          document.getElementById('img-logo-ceu').src = "https://via.placeholder.com/150/cbd5e1/ffffff?text=SEM+FOTO";
+        }
+
+        // Limpa os filtros antigos
+        document.getElementById('resultado').innerHTML = "";
+        document.getElementById('comboModalidade').innerHTML = '<option value="">🎯 Modalidade (Todas)</option>';
+        document.getElementById('comboNucleo').innerHTML = '<option value="">🏢 Núcleo (Todos)</option>';
+        document.getElementById('comboProfessor').innerHTML = '<option value="">👨‍🏫 Professor (Todos)</option>';
+        document.getElementById('comboEspaco').innerHTML = '<option value="">📍 Espaço (Todos)</option>';
+
+        // Busca as modalidades da planilha específica desse CEU
+        fetch(API_URL + "&acao=buscarCombos&idCeu=" + idCeuSelecionado)
           .then(resposta => resposta.json())
           .then(dados => preencherCombos(dados))
-          .catch(erro => console.log("Erro ao carregar os combos: ", erro));
-      });
+          .catch(erro => console.log("Erro ao carregar combos locais: ", erro));
+      }
 
       function preencherCombos(opcoes) {
         const comboMod = document.getElementById('comboModalidade');
@@ -435,12 +292,18 @@
       }
 
       function pesquisar() {
+        const idCeuAtual = document.getElementById('comboCeuMestre').value;
         var termo = document.getElementById('termo').value;
         var modSelecionada = document.getElementById('comboModalidade').value;
         var nucSelecionado = document.getElementById('comboNucleo').value;
         var profSelecionado = document.getElementById('comboProfessor').value;
         var espSelecionado = document.getElementById('comboEspaco').value;
         
+        if(!idCeuAtual) {
+           alert("Por favor, selecione um CEU primeiro.");
+           return;
+        }
+
         if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
            document.getElementById('resultado').innerHTML = "<div class='no-results'> </div>";
            return;
@@ -448,8 +311,10 @@
 
         document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades, aguarde...</div>";
         
+        // A busca envia a chave idCeu do combo mestre
         const params = new URLSearchParams({
           acao: 'buscarDados',
+          idCeu: idCeuAtual,
           termo: termo,
           dias: JSON.stringify(diasSelecionados),
           prof: profSelecionado,
@@ -458,7 +323,6 @@
           esp: espSelecionado
         });
 
-        // Usa o método GET idêntico ao original, apenas com o novo link
         fetch(API_URL + "&" + params.toString())
           .then(resposta => resposta.json())
           .then(dados => mostrarResultados(dados))
@@ -478,7 +342,6 @@
         
         for (var i = 0; i < dados.length; i++) {
           var turma = dados[i]; 
-          
           var diasFormatados = turma.dias ? "<span class='badge-dias'>" + turma.dias + "</span>" : "";
           var horaFormatada = turma.horario ? "<span class='badge-hora'><i class='far fa-clock'></i> " + turma.horario + "</span>" : "";
 
