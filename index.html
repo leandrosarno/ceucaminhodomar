@@ -202,6 +202,7 @@
           .catch(erro => console.log("Erro ao carregar combos: ", erro));
       });
 
+
       function preencherCombos(opcoes) {
         const comboMod = document.getElementById('comboModalidade');
         opcoes.modalidades.forEach(mod => comboMod.appendChild(new Option(mod, mod)));
@@ -221,6 +222,9 @@
         if (opcoes.regras) {
            document.getElementById('texto-regras-documentos').innerHTML = opcoes.regras.replace(/\n/g, '<br>');
         }
+        
+        // 🌟 NOVIDADE: Assim que preencher os combos, já lista todas as turmas!
+        pesquisar();
       }
 
       function pesquisar() {
@@ -230,10 +234,8 @@
         var profSelecionado = document.getElementById('comboProfessor').value;
         var espSelecionado = document.getElementById('comboEspaco').value;
         
-        if(termo.trim() === "" && diasSelecionados.length === 0 && profSelecionado === "" && modSelecionada === "" && nucSelecionado === "" && espSelecionado === "") {
-           document.getElementById('resultado').innerHTML = "<div class='no-results'> </div>";
-           return;
-        } 
+        // 🌟 NOVIDADE: Removemos o bloqueio que deixava a tela em branco se não houvesse filtro.
+        // Agora, se estiver tudo vazio, ele simplesmente traz a planilha toda.
 
         document.getElementById('resultado').innerHTML = "<div class='loading'><i class='fas fa-spinner fa-spin me-2'></i> Buscando atividades, aguarde...</div>";
         
@@ -251,7 +253,7 @@
           .then(resposta => resposta.json())
           .then(dados => mostrarResultados(dados))
           .catch(erro => {
-            document.getElementById('resultado').innerHTML = "<div class='no-results'>Erro ao carregar os dados. Verifique a API.</div>";
+            document.getElementById('resultado').innerHTML = "<div class='no-results'>Erro de comunicação com a planilha. Verifique a URL do App Script.</div>";
             console.log(erro);
           });
       }
