@@ -34,29 +34,39 @@
       .container { max-width: 1200px; margin: 0 auto; }
 
       /* CABEÇALHO ESTILO PORTAL */
-      .hero-header { background: var(--card-bg); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; border-top: 5px solid var(--header-color); }
+      .hero-header { position: relative; background: var(--card-bg); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px; margin-bottom: 24px; border-top: 5px solid var(--header-color); }
       .hero-brand { display: flex; align-items: flex-start; gap: 15px; flex: 1; min-width: 300px; }
-      .hero-brand img { max-height: 80px; width: auto; border-radius: 8px; object-fit: contain; margin-top: 5px; } 
+      .hero-brand img { height: 110px; max-width: 180px; width: auto; border-radius: 8px; object-fit: contain; align-self: center; flex-shrink: 0; }
+      .hero-titles { flex: 1; min-width: 0; }
       .hero-titles h1 { color: var(--header-color); margin: 0 0 5px 0; font-size: 26px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
       .hero-titles p { color: var(--text-muted); margin: 0; font-size: 14px; font-weight: 600; line-height: 1.4; }
       
       /* BADGES DE TOTAIS */
-      .stats-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-      .stat-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 12px; border: 1px solid transparent; }
+      .totals-social-row { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; width: 100%; margin-top: 12px; }
+      .stats-row { display: flex; gap: 8px; margin-top: 0; flex-wrap: nowrap; }
+      .stat-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 20px; font-weight: 800; font-size: 12px; border: 1px solid transparent; white-space: nowrap; }
       .stat-cultura { background: rgba(128,90,213,0.1); color: #805ad5; border-color: rgba(128,90,213,0.2); }
       .stat-educacao { background: rgba(56,161,105,0.1); color: #38a169; border-color: rgba(56,161,105,0.2); }
       .stat-esporte { background: rgba(221,107,32,0.1); color: #dd6b20; border-color: rgba(221,107,32,0.2); }
+      .btn-docs { width: auto; padding: 6px 12px; border: 1px solid rgba(43,108,176,0.25); border-radius: 20px; background: rgba(43,108,176,0.1); color: #2b6cb0; font-size: 12px; }
+      .btn-docs:hover { background: #2b6cb0; color: white; transform: translateY(-2px); }
       
       /* BOTÕES SOCIAIS E DE CONTATO */
-      .social-links { display: flex; gap: 8px; margin-top: 12px; }
+      .social-links { display: flex; gap: 8px; margin-top: 0; }
       .btn-social { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; color: white; text-decoration: none; font-size: 16px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
       .btn-social:hover { transform: scale(1.1); color: white; }
       .btn-whatsapp { background-color: #25D366; }
       .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
       .btn-facebook { background-color: #1877F2; }
 
-      .top-actions { display: flex; gap: 10px; flex-direction: column; align-items: flex-end; }
+      .top-actions { display: flex; gap: 10px; flex-direction: column; align-items: flex-end; min-width: 118px; }
       .btn-docs, .btn-theme { background: var(--header-color); color: white; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; width: 100%; white-space: nowrap; }
+      .totals-social-row .btn-docs { order: 2; flex: 0 0 auto; width: auto; padding: 6px 10px; border: 1px solid rgba(43,108,176,0.2); border-radius: 20px; background: rgba(43,108,176,0.1); color: #2b6cb0; font-size: 12px; font-weight: 800; white-space: nowrap; }
+      .totals-social-row .btn-docs:hover { background: rgba(43,108,176,0.18); color: #2b6cb0; transform: translateY(-1px); }
+      .stats-row { order: 1; }
+      .social-links { order: 3; margin-left: auto; }
+      .totals-social-row .social-links { position: absolute; right: 24px; bottom: 24px; width: auto; flex: 0 0 auto; }
+      .totals-social-row .btn-docs { margin-left: 0; }
       .btn-theme { background: var(--card-bg); color: var(--header-color); border: 2px solid var(--header-color); width: auto; }
       .btn-docs:hover { background: #2c5282; transform: translateY(-2px); }
       .btn-theme:hover { background: var(--header-color); color: white; }
@@ -126,8 +136,13 @@
       @media (max-width: 768px) {
         .hero-header { flex-direction: column; align-items: flex-start; }
         .hero-brand { flex-direction: column; align-items: center; text-align: center; width: 100%; }
-        .stats-row { justify-content: center; width: 100%; }
-        .social-links { justify-content: center; }
+        .hero-brand img { height: 90px; max-width: 160px; }
+        .totals-social-row { justify-content: center; flex-wrap: wrap; }
+        .stats-row { justify-content: center; width: auto; }
+        .social-links { justify-content: center; margin-left: 0; }
+        .totals-social-row .social-links { position: static; }
+        .top-actions .social-links { justify-content: center; }
+        .totals-social-row .btn-docs { margin-left: 0; }
         .top-actions { width: 100%; align-items: center; }
         .action-row { justify-content: center; width: 100%; }
         .search-bar { flex-direction: column; }
@@ -149,19 +164,20 @@
             <p id="txt-endereco-ceu"><i class="fas fa-spinner fa-spin"></i> Conectando à base de dados...</p>
             <p id="txt-horario-ceu" style="display: none;"></p>
             
-            <!-- 🌟 PAINEL DE TOTAIS DOS NÚCLEOS -->
-            <div id="container-totais" class="stats-row" style="display: none;">
-              <div class="stat-badge stat-cultura" title="Núcleo de Ação Cultural"><i class="fas fa-palette"></i> <span id="total-cultura">0</span></div>
-              <div class="stat-badge stat-educacao" title="Núcleo de Ação Educacional"><i class="fas fa-book-open"></i> <span id="total-educacao">0</span></div>
-              <div class="stat-badge stat-esporte" title="Núcleo de Esportes e Lazer"><i class="fas fa-running"></i> <span id="total-esporte">0</span></div>
+            <!-- 🌟 PAINEL DE TOTAIS DOS NÚCLEOS E REDES SOCIAIS -->
+            <div class="totals-social-row">
+              <div id="container-totais" class="stats-row" style="display: none;">
+                <div class="stat-badge stat-cultura" title="Núcleo de Ação Cultural"><i class="fas fa-palette"></i> <span id="total-cultura">0</span></div>
+                <div class="stat-badge stat-educacao" title="Núcleo de Ação Educacional"><i class="fas fa-book-open"></i> <span id="total-educacao">0</span></div>
+                <div class="stat-badge stat-esporte" title="Núcleo de Esportes e Lazer"><i class="fas fa-running"></i> <span id="total-esporte">0</span></div>
+              </div>
+              <button class="btn-docs" onclick="abrirModal()"><i class="fas fa-file-signature"></i> Como me matricular?</button>
+              <div id="container-social" class="social-links"></div>
             </div>
-
-            <div id="container-social" class="social-links"></div>
           </div>
         </div>
         <div class="top-actions">
           <div class="action-row">
-            <button class="btn-docs" onclick="abrirModal()"><i class="fas fa-file-signature"></i> Como me matricular?</button>
             <button class="btn-theme" onclick="alternarTema()"><i id="icone-tema" class="fas fa-moon"></i></button>
           </div>
         </div>
@@ -374,9 +390,9 @@
               <div class="card-header">
                 <div class="card-category">
                   <span>${nucleoTexto}</span>
-                  <span>${numTurma}</span>
+                  <span>${numTurma} ${sufixoTexto}</span>
                 </div>
-                <h3 class="card-title">${turma.modalidade || "Atividade"}${sufixoTexto}</h3>
+                <h3 class="card-title">${turma.modalidade || "Atividade"}</h3>
               </div>
               <div class="card-body">
                 <div class="info-row">
