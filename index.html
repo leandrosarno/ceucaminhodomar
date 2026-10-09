@@ -40,6 +40,13 @@
       .hero-titles h1 { color: var(--header-color); margin: 0 0 5px 0; font-size: 26px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
       .hero-titles p { color: var(--text-muted); margin: 0; font-size: 14px; font-weight: 600; line-height: 1.4; }
       
+      /* BADGES DE TOTAIS */
+      .stats-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+      .stat-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 12px; border: 1px solid transparent; }
+      .stat-cultura { background: rgba(128,90,213,0.1); color: #805ad5; border-color: rgba(128,90,213,0.2); }
+      .stat-educacao { background: rgba(56,161,105,0.1); color: #38a169; border-color: rgba(56,161,105,0.2); }
+      .stat-esporte { background: rgba(221,107,32,0.1); color: #dd6b20; border-color: rgba(221,107,32,0.2); }
+      
       /* BOTÕES SOCIAIS E DE CONTATO */
       .social-links { display: flex; gap: 8px; margin-top: 12px; }
       .btn-social { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; color: white; text-decoration: none; font-size: 16px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -77,23 +84,18 @@
       .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
       .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
       
-      /* 🌟 CORES DOS NÚCLEOS - NOVA FUNCIONALIDADE */
-      /* Tema Padrão (Azul) */
       .theme-default .card-header { background: linear-gradient(135deg, rgba(43,108,176,0.1), rgba(99,179,237,0.1)); border-bottom: 1px solid rgba(43,108,176,0.2); }
       .theme-default .card-category { color: #2b6cb0; }
       .theme-default:hover { border-color: #2b6cb0; box-shadow: 0 10px 25px rgba(43,108,176,0.15); transform: translateY(-5px); }
 
-      /* Tema Cultural (Roxo) */
       .theme-cultural .card-header { background: linear-gradient(135deg, rgba(128,90,213,0.1), rgba(159,122,234,0.1)); border-bottom: 1px solid rgba(128,90,213,0.2); }
       .theme-cultural .card-category { color: #805ad5; }
       .theme-cultural:hover { border-color: #805ad5; box-shadow: 0 10px 25px rgba(128,90,213,0.15); transform: translateY(-5px); }
 
-      /* Tema Educacional (Verde) */
       .theme-educacional .card-header { background: linear-gradient(135deg, rgba(56,161,105,0.1), rgba(72,187,120,0.1)); border-bottom: 1px solid rgba(56,161,105,0.2); }
       .theme-educacional .card-category { color: #38a169; }
       .theme-educacional:hover { border-color: #38a169; box-shadow: 0 10px 25px rgba(56,161,105,0.15); transform: translateY(-5px); }
 
-      /* Tema Esportes e Lazer (Laranja) */
       .theme-esportes .card-header { background: linear-gradient(135deg, rgba(221,107,32,0.1), rgba(237,137,54,0.1)); border-bottom: 1px solid rgba(221,107,32,0.2); }
       .theme-esportes .card-category { color: #dd6b20; }
       .theme-esportes:hover { border-color: #dd6b20; box-shadow: 0 10px 25px rgba(221,107,32,0.15); transform: translateY(-5px); }
@@ -124,6 +126,7 @@
       @media (max-width: 768px) {
         .hero-header { flex-direction: column; align-items: flex-start; }
         .hero-brand { flex-direction: column; align-items: center; text-align: center; width: 100%; }
+        .stats-row { justify-content: center; width: 100%; }
         .social-links { justify-content: center; }
         .top-actions { width: 100%; align-items: center; }
         .action-row { justify-content: center; width: 100%; }
@@ -140,12 +143,19 @@
       <!-- HERO HEADER DINÂMICO -->
       <div class="hero-header">
         <div class="hero-brand">
-          <!-- 🌟 Link atualizado com a URL otimizada do Google -->
           <img src="https://lh3.googleusercontent.com/d/1_QvlG1xHgKY_ukxAF9C4V-VhHbG9d-Q1" alt="Logo CEU" id="logo-ceu">
           <div class="hero-titles">
             <h1 id="txt-titulo-ceu">Aguarde, carregando...</h1>
             <p id="txt-endereco-ceu"><i class="fas fa-spinner fa-spin"></i> Conectando à base de dados...</p>
             <p id="txt-horario-ceu" style="display: none;"></p>
+            
+            <!-- 🌟 PAINEL DE TOTAIS DOS NÚCLEOS -->
+            <div id="container-totais" class="stats-row" style="display: none;">
+              <div class="stat-badge stat-cultura" title="Núcleo de Ação Cultural"><i class="fas fa-palette"></i> <span id="total-cultura">0</span></div>
+              <div class="stat-badge stat-educacao" title="Núcleo de Ação Educacional"><i class="fas fa-book-open"></i> <span id="total-educacao">0</span></div>
+              <div class="stat-badge stat-esporte" title="Núcleo de Esportes e Lazer"><i class="fas fa-running"></i> <span id="total-esporte">0</span></div>
+            </div>
+
             <div id="container-social" class="social-links"></div>
           </div>
         </div>
@@ -244,7 +254,7 @@
       function preencherCombos(opcoes) {
         if (opcoes.parametros) {
           const p = opcoes.parametros;
-          if (p.ceu) document.getElementById('txt-titulo-ceu').innerHTML = p.ceu;
+          if (p.ceu) document.getElementById('txt-titulo-ceu').innerHTML = p.ceu; // 🌟 Resolvido o "CEU" duplicado!
           
           let endStr = "";
           if(p.endereco) endStr += p.endereco;
@@ -272,6 +282,14 @@
             htmlSocial += `<a href="${p.facebook}" target="_blank" class="btn-social btn-facebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>`;
           }
           document.getElementById('container-social').innerHTML = htmlSocial;
+        }
+
+        // 🌟 ATIVANDO OS CONTADORES
+        if (opcoes.totais) {
+          document.getElementById('total-cultura').innerText = opcoes.totais.cultural + " Turmas Culturais";
+          document.getElementById('total-educacao').innerText = opcoes.totais.educacional + " Turmas Educacionais";
+          document.getElementById('total-esporte').innerText = opcoes.totais.esportes + " Turmas Esportivas";
+          document.getElementById('container-totais').style.display = "flex";
         }
 
         const comboMod = document.getElementById('comboModalidade');
@@ -341,7 +359,6 @@
           const sufixoTexto = turma.sufixo ? ` - ${turma.sufixo}` : "";
           const numTurma = turma.turma ? `Turma ${turma.turma}` : "";
 
-          // 🌟 LÓGICA DE CORES DOS NÚCLEOS
           let temaClass = "theme-default";
           let nucUpper = nucleoTexto.toUpperCase();
           if (nucUpper.includes("CULTURAL") || nucUpper.includes("CULTURA")) {
