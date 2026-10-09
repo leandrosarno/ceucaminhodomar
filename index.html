@@ -76,10 +76,30 @@
       /* GRID DE CARDS */
       .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
       .card { background: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); transition: 0.3s; border: 1px solid var(--border-color); display: flex; flex-direction: column; }
-      .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-color: var(--header-color); }
       
-      .card-header { background: linear-gradient(135deg, rgba(43,108,176,0.1), rgba(99,179,237,0.1)); padding: 20px; border-bottom: 1px solid var(--border-color); }
-      .card-category { font-size: 11px; text-transform: uppercase; font-weight: 800; color: var(--header-color); letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+      /* 🌟 CORES DOS NÚCLEOS - NOVA FUNCIONALIDADE */
+      /* Tema Padrão (Azul) */
+      .theme-default .card-header { background: linear-gradient(135deg, rgba(43,108,176,0.1), rgba(99,179,237,0.1)); border-bottom: 1px solid rgba(43,108,176,0.2); }
+      .theme-default .card-category { color: #2b6cb0; }
+      .theme-default:hover { border-color: #2b6cb0; box-shadow: 0 10px 25px rgba(43,108,176,0.15); transform: translateY(-5px); }
+
+      /* Tema Cultural (Roxo) */
+      .theme-cultural .card-header { background: linear-gradient(135deg, rgba(128,90,213,0.1), rgba(159,122,234,0.1)); border-bottom: 1px solid rgba(128,90,213,0.2); }
+      .theme-cultural .card-category { color: #805ad5; }
+      .theme-cultural:hover { border-color: #805ad5; box-shadow: 0 10px 25px rgba(128,90,213,0.15); transform: translateY(-5px); }
+
+      /* Tema Educacional (Verde) */
+      .theme-educacional .card-header { background: linear-gradient(135deg, rgba(56,161,105,0.1), rgba(72,187,120,0.1)); border-bottom: 1px solid rgba(56,161,105,0.2); }
+      .theme-educacional .card-category { color: #38a169; }
+      .theme-educacional:hover { border-color: #38a169; box-shadow: 0 10px 25px rgba(56,161,105,0.15); transform: translateY(-5px); }
+
+      /* Tema Esportes e Lazer (Laranja) */
+      .theme-esportes .card-header { background: linear-gradient(135deg, rgba(221,107,32,0.1), rgba(237,137,54,0.1)); border-bottom: 1px solid rgba(221,107,32,0.2); }
+      .theme-esportes .card-category { color: #dd6b20; }
+      .theme-esportes:hover { border-color: #dd6b20; box-shadow: 0 10px 25px rgba(221,107,32,0.15); transform: translateY(-5px); }
+
+      .card-header { padding: 20px; }
+      .card-category { font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; display: flex; justify-content: space-between; }
       .card-title { margin: 0; font-size: 20px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
       
       .card-body { padding: 20px; flex: 1; }
@@ -120,7 +140,8 @@
       <!-- HERO HEADER DINÂMICO -->
       <div class="hero-header">
         <div class="hero-brand">
-          <img src="https://drive.google.com/uc?export=view&id=1_QvlG1xHgKY_ukxAF9C4V-VhHbG9d-Q1" alt="Logo CEU" id="logo-ceu">
+          <!-- 🌟 Link atualizado com a URL otimizada do Google -->
+          <img src="https://lh3.googleusercontent.com/d/1_QvlG1xHgKY_ukxAF9C4V-VhHbG9d-Q1" alt="Logo CEU" id="logo-ceu">
           <div class="hero-titles">
             <h1 id="txt-titulo-ceu">Aguarde, carregando...</h1>
             <p id="txt-endereco-ceu"><i class="fas fa-spinner fa-spin"></i> Conectando à base de dados...</p>
@@ -185,7 +206,7 @@
     </div>
 
     <script>
-      // ⚠️ COLE A SUA NOVA URL AQUI!
+      // ⚠️ COLE A SUA URL DO WEB APP AQUI EMBAIXO!
       const API_URL = "https://script.google.com/macros/s/AKfycbzSppw9qSted6_sfB4NHoizKg_kkRm1CI3TaGdyw-yzBOMGe2e_McKv1zCn45gPHfDYQQ/exec"; 
 
       let diasSelecionados = [];
@@ -221,7 +242,6 @@
       });
 
       function preencherCombos(opcoes) {
-        // 🌟 INJETANDO OS PARÂMETROS DA UNIDADE NO CABEÇALHO
         if (opcoes.parametros) {
           const p = opcoes.parametros;
           if (p.ceu) document.getElementById('txt-titulo-ceu').innerHTML = "CEU " + p.ceu;
@@ -241,7 +261,6 @@
 
           let htmlSocial = "";
           if (p.whatsapp) {
-            // Se o usuário colocou apenas os números, formata para link. Se já colocou o link, usa direto.
             let linkWhats = p.whatsapp.includes("http") ? p.whatsapp : `https://wa.me/55${p.whatsapp.replace(/\D/g,'')}`;
             htmlSocial += `<a href="${linkWhats}" target="_blank" class="btn-social btn-whatsapp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>`;
           }
@@ -255,7 +274,6 @@
           document.getElementById('container-social').innerHTML = htmlSocial;
         }
 
-        // Restante das opções
         const comboMod = document.getElementById('comboModalidade');
         opcoes.modalidades.forEach(mod => comboMod.appendChild(new Option(mod, mod)));
 
@@ -323,8 +341,19 @@
           const sufixoTexto = turma.sufixo ? ` - ${turma.sufixo}` : "";
           const numTurma = turma.turma ? `Turma ${turma.turma}` : "";
 
+          // 🌟 LÓGICA DE CORES DOS NÚCLEOS
+          let temaClass = "theme-default";
+          let nucUpper = nucleoTexto.toUpperCase();
+          if (nucUpper.includes("CULTURAL") || nucUpper.includes("CULTURA")) {
+            temaClass = "theme-cultural";
+          } else if (nucUpper.includes("EDUCACIONAL") || nucUpper.includes("EDUCAÇÃO") || nucUpper.includes("EDUCACAO")) {
+            temaClass = "theme-educacional";
+          } else if (nucUpper.includes("ESPORTE") || nucUpper.includes("LAZER")) {
+            temaClass = "theme-esportes";
+          }
+
           html += `
-            <div class="card">
+            <div class="card ${temaClass}">
               <div class="card-header">
                 <div class="card-category">
                   <span>${nucleoTexto}</span>
